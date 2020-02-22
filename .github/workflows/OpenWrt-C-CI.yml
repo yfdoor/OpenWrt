@@ -21,7 +21,7 @@ env:
   SSH_ACTIONS: false
   UPLOAD_BIN_IPK: true
   UPLOAD_FIRMWARE: true
-  PACKAGE_EXTRAS: true
+  PACKAGE_EXTRAS: false
 
 jobs:
   build:
