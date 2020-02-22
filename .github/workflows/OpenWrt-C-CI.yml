@@ -21,7 +21,7 @@ env:
   SSH_ACTIONS: false
   UPLOAD_BIN_IPK: true
   UPLOAD_FIRMWARE: true
-  PACKAGE_EXTRAS: false
+  PACKAGE_EXTRAS: true
 
 jobs:
   build:
@@ -58,10 +58,10 @@ jobs:
         if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
-          sudo rm -rf package/yfdoor
-          mkdir -p package/yfdoor
-          svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/yfdoor
-          sudo rm -rf package/yfdoor/.svn/
+          sudo rm -rf package/lean
+          mkdir -p package/lean
+          svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
+          sudo rm -rf package/lean/.svn/
 
       # 更新Feed
       - name: Update feeds
