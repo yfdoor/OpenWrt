@@ -21,8 +21,8 @@ env:
   REPO_BRANCH: master
   SSH_ACTIONS: false
   UPLOAD_BIN_IPK: true
-  UPLOAD_FIRMWARE: true
-  PACKAGE_EXTRAS: true
+  UPLOAD_FIRMWARE: false
+  PACKAGE_EXTRAS: false
 
 jobs:
   build:
@@ -97,7 +97,8 @@ jobs:
         run: |
           cd openwrt
           echo -e "$(nproc) thread compile"
-          make -j$(nproc) || make -j1 V=s
+          # make -j$(nproc) || make -j1 V=s
+          make package/lean/luci-app-ssr-plus/compile V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
