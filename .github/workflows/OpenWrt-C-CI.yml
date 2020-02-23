@@ -16,7 +16,8 @@ on:
 
 # 编译环境定义
 env:
-  REPO_URL: https://github.com/openwrt/openwrt.git
+  # REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: master
   SSH_ACTIONS: false
   UPLOAD_BIN_IPK: true
