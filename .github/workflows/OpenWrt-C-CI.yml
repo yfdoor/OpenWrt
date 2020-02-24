@@ -97,9 +97,7 @@ jobs:
         run: |
           cd openwrt
           echo -e "$(nproc) thread compile"
-          # make -j$(nproc) || make -j1 V=s
-          make package/feeds/luci/luci-base/compile V=s
-          make package/lean/luci-app-ssr-plus/compile V=s
+          make -j$(nproc) || make -j1 V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
