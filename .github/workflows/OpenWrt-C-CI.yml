@@ -16,13 +16,13 @@ on:
 
 # 编译环境定义
 env:
-  # REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_URL: https://github.com/openwrt/openwrt.git
+  # REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: master
   SSH_ACTIONS: false
   UPLOAD_BIN_IPK: true
   UPLOAD_FIRMWARE: true
-  PACKAGE_EXTRAS: false
+  PACKAGE_EXTRAS: true
 
 jobs:
   build:
@@ -76,6 +76,7 @@ jobs:
         run: |
           [ -e files ] && cp files openwrt/files
           [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
+          [ -e feeds.conf.default ] && cp feeds.conf.default openwrt/feeds.conf.default
           cd openwrt
           make defconfig
 
