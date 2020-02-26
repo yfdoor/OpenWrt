@@ -76,6 +76,7 @@ jobs:
         run: |
           [ -e files ] && cp files openwrt/files
           [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
+          [ -e tools ] && cp tools openwrt/tools
           [ -e feeds.conf.default ] && cp feeds.conf.default openwrt/feeds.conf.default
           cd openwrt
           make defconfig
