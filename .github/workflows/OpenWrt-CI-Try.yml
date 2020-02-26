@@ -74,10 +74,10 @@ jobs:
       # 配置文件
       - name: Configuration file
         run: |
-          [ -e files ] && cp files openwrt/files
-          [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
-          [ -e tools ] && cp tools openwrt/tools
-          [ -e feeds.conf.default ] && cp feeds.conf.default openwrt/feeds.conf.default
+          [ -e files ] && cp -f -r files openwrt/files
+          [ -e config.d/x86_64.config ] && cp -f -r config.d/x86_64.config openwrt/.config
+          [ -e tools ] && cp -f -r tools openwrt/tools
+          [ -e feeds.conf.default ] && cp -f -r feeds.conf.default openwrt/feeds.conf.default
           cd openwrt
           make defconfig
 
