@@ -9,8 +9,8 @@ on:
   #    - master
   # schedule:
   #   - cron: 0 0 * * 5
-   release:
-     types: published
+  release:
+    types: published
   # watch:
   #   types: [started]
 
