@@ -4,15 +4,15 @@
 name: OpenWrt-C-CI
 
 on:
-  release:
-    types: published
+  # release:
+  #  types: published
   # push:
   #  branches: 
   #    - master
   # schedule:
   #   - cron: 0 0 * * 5
-  # watch:
-  #   types: [started]
+  watch:
+    types: [started]
 
 # 编译环境定义
 env:
