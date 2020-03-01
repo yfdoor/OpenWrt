@@ -4,13 +4,13 @@
 name: Create release
 
 on:
-  schedule:
-    - cron: 0 0 */3 * *
+  #schedule:
+  #  - cron: 0 0 */3 * *
   watch:
     types: started
 
 jobs:
-  Create release:
+  Create Release:
     runs-on: ubuntu-latest
 
     steps:
