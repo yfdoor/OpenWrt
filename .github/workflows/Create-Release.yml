@@ -10,7 +10,7 @@ on:
     types: started
 
 jobs:
-  Release:
+  release:
     runs-on: ubuntu-latest
 
     steps:
