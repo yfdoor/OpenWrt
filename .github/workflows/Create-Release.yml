@@ -31,9 +31,7 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
           body: |
-            Changes in this Release:
-            - First Change
-            - Second Change
-            - 🚀 Automated build | 自动编译
+            - Release by YFDOOR
+            - Automated build | 自动编译
           draft: false
           prerelease: false
