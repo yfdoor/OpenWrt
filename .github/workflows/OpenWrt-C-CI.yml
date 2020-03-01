@@ -131,11 +131,11 @@ jobs:
           name: OpenWrt_firmware_yfdoor
           path: ./openwrt/bin/targets/
 
-      # 发布固件  
-      - name: Upload to release
-        uses: softprops/action-gh-release@v1
-        if: env.UPLOAD_RELEASE == 'true' && startsWith(github.ref, 'refs/tags/')
+      # 发布固件
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        if: env.UPLOAD_RELEASE == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: ${{ env.FIRMWARE }}/*
