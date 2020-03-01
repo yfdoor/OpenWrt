@@ -1,7 +1,7 @@
 # This is free software, lisence use MIT.
 # Copyright (C) https://github.com/yfdoor
 
-name: Create Release
+name: Create-Release
 
 on:
   #push:
@@ -13,7 +13,7 @@ on:
     types: started
 
 jobs:
-  build:
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,8 +32,7 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
           body: |
-            Automated build | 自动编译 @ By YFDOOR
-            - First Change
-            - Second Change
+            🚀 Automated build | 自动编译
+            Build @ $(TZ=UTC-8 date) By YFDOOR
           draft: false
           prerelease: false
