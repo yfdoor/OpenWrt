@@ -7,8 +7,8 @@ on:
   #push:
   #  tags:
   #    - 'v*'
-  #schedule:
-  #  - cron: 0 0 */3 * *
+  schedule:
+    - cron: 0 0 * * 5
   watch:
     types: started
 
@@ -22,8 +22,8 @@ jobs:
       - name: Generate tag           
         run: |
           echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+
       - name: Create Release
-        id: create_release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
