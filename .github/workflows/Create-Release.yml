@@ -32,7 +32,7 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
           body: |
-            🚀 Automated build | 自动编译
             Build @ $(TZ=UTC-8 date) By YFDOOR
+            🚀 Automated build | 自动编译
           draft: false
           prerelease: false
