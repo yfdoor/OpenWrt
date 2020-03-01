@@ -1,27 +1,37 @@
 # This is free software, lisence use MIT.
 # Copyright (C) https://github.com/yfdoor
 
-name: Create-Release
+name: Create Release
 
 on:
+  #push:
+  #  tags:
+  #    - 'v*'
   #schedule:
   #  - cron: 0 0 */3 * *
   watch:
     types: started
 
+
 jobs:
   Create-Release:
+    name: Create Release
     runs-on: ubuntu-latest
-
     steps:
-      - name: Generate Tag
-        run: |
-          echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
-        
+      - name: Checkout code
+        uses: actions/checkout@master
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        id: create_release
+        uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          body: 🚀 Automated build | 自动编译
+          tag_name: ${{ github.ref }} "_" $(TZ=UTC-8 date +"%Y.%m.%d")"
+          release_name: Release ${{ github.ref }} "_" $(TZ=UTC-8 date +"%Y.%m.%d")"
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+            - 🚀 Automated build | 自动编译
+          draft: false
+          prerelease: false
