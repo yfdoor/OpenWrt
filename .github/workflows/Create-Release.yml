@@ -12,7 +12,6 @@ on:
   watch:
     types: started
 
-
 jobs:
   Create-Release:
     name: Create Release
@@ -21,13 +20,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Create Release
-        id: create_release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: ${{ github.ref }} "_" $(TZ=UTC-8 date +"%Y.%m.%d")"
-          release_name: Release ${{ github.ref }} "_" $(TZ=UTC-8 date +"%Y.%m.%d")"
+          tag_name: ${{ github.ref }} $(TZ=UTC-8 date +"%Y.%m.%d")"
+          release_name: Release ${{ github.ref }} $(TZ=UTC-8 date +"%Y.%m.%d")"
           body: |
             Changes in this Release
             - First Change
