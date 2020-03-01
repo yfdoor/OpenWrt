@@ -5,7 +5,7 @@ name: OpenWrt-C-CI
 
 on:
   release:
-    types: [published]
+    types: published
   # push:
   #  branches: 
   #    - master
