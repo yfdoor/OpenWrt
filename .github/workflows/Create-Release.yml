@@ -14,20 +14,24 @@ on:
 
 jobs:
   Create-Release:
-    name: Create Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+
+      - name: Generate tag
+        run: |
+          echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"  
+
       - name: Create Release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: $(TZ=UTC-8 date +"%Y.%m.%d")
-          release_name: Release $(TZ=UTC-8 date +"%Y.%m.%d") by YFDOOR
+          tag_name: ${{ env.RELEASE_TAG }}
+          release_name: ${{ env.RELEASE_TAG }}
           body: |
-            Changes in this Release
+            Changes in this Release:
             - First Change
             - Second Change
             - 🚀 Automated build | 自动编译
