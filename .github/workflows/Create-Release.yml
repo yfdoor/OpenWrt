@@ -30,8 +30,6 @@ jobs:
         with:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
-          body: |
-            Released by YFDOOR
-            Automated build | 自动编译
+          body: Automated build | 自动编译 @ By YFDOOR
           draft: false
           prerelease: false
