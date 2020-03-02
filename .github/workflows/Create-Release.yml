@@ -133,7 +133,7 @@ jobs:
       - name: Generate tag           
         run: |
           echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
-          zip config.zip ./config.d
+          zip config.zip config.d
 
 
       - name: Create Release
