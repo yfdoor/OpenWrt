@@ -4,21 +4,132 @@
 name: Create-Release
 
 on:
-  #push:
-  #  tags:
-  #    - 'v*'
+  #  push:
+  #    branches:
+  #      - master
+  #    paths:
+  #      - '.config'
   schedule:
-    - cron: 0 0 * * 5
+    - cron: 0 0 * * 1
   watch:
     types: started
+
+# 编译环境定义
+env:
+  # REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_BRANCH: master
+  SSH_ACTIONS: false
+  UPLOAD_BIN_IPK: true
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  PACKAGE_EXTRAS: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
     steps:
-      - name: Checkout code
+      # 项目初始
+      - name: Checkout
         uses: actions/checkout@master
-        
+
+      # 空间清理
+      - name: Space cleanup
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E apt-get update
+          sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          df -h
+
+     # 下载源码
+      - name: Clone source code
+        run: |
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+
+     # 更新Lean's package
+      - name: Copy Lean's Package
+        if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+        run: |
+          cd openwrt
+          sudo rm -rf package/lean
+          mkdir -p package/lean
+          svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
+          sudo rm -rf package/lean/.svn/
+ 
+      # 更新Feed
+      - name: Update feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      # 配置文件
+      - name: Configuration file
+        run: |
+          [ -e files ] && cp files openwrt/files
+          [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
+          cd openwrt
+          make defconfig
+
+      # SSH连接
+      - name: SSH connection
+        uses: yfdoor/debugger-action@master
+        if: env.SSH_ACTIONS == 'true'
+
+      # 下载文件
+      - name: Make download
+        run: |
+          cd openwrt
+          make download -j8
+          find dl/ -size -1024c -exec rm -f {} \;
+
+      # 编译固件
+      - name: Compile firmware
+        id: compile
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          make -j$(nproc) || make -j1 V=s
+          echo "======================="
+          echo "Space usage:"
+          echo "======================="
+          df -h
+          echo "======================="
+          echo "::set-output name=status::success"
+
+      # 上传IPK
+      - name: Upload bin IPK
+        uses: actions/upload-artifact@master
+        if: env.UPLOAD_BIN_IPK == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
+        with:
+         name: OpenWrt_bin_yfdoor
+         path: ./openwrt/bin/packages/
+
+      # 准备固件
+      - name: Organize artifact
+        id: organize
+        if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
+        run: |
+          find ./openwrt/bin/targets/ -type d -name "packages" | xargs rm -rf {}
+          echo "::set-output name=status::success"
+
+      # 上传固件
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: OpenWrt_firmware_yfdoor
+          path: ./openwrt/bin/targets/
+
+      
       - name: Generate tag           
         run: |
           echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
@@ -32,3 +143,14 @@ jobs:
           body: |
             Build @ By YFDOOR
             🚀 Automated build | 自动编译
+
+      # 发布固件
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        if: env.UPLOAD_RELEASE == 'true' && startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          files: ${{ env.FIRMWARE }}/*
+            
+            
