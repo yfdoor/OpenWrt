@@ -130,13 +130,15 @@ jobs:
           path: ./openwrt/bin/targets/
 
       # 准备发行
-      - name: Generate tag           
+      - name: Generate tag
         run: |
           echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
           cd openwrt
           pwd
           zip -r OpenWrt_firmware.zip bin
-
+          ls -l
+          cd ./
+          ls -l
 
       # 创建发行
       - name: Create Release
@@ -155,7 +157,7 @@ jobs:
 
       # 上传发行
       - name: Upload Release Asset
-        id: upload-release-asset 
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
