@@ -138,8 +138,9 @@ jobs:
         id: organize
         if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
         run: |
-          zip -r OpenWrt_firmware.zip /openwrt/bin
-          find ./openwrt/bin/targets/ -type d -name "packages" | xargs rm -rf {}
+          cd openwrt
+          zip -r OpenWrt_firmware.zip bin
+          find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
           echo "::set-output name=status::success"           
 
       # 上传固件
