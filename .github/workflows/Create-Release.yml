@@ -134,7 +134,7 @@ jobs:
         run: |
           echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
           pwd
-          zip -r OpenWrt_firmware.zip /openwrt/bin
+          zip -r OpenWrt_firmware.zip bin
 
 
       # 创建发行
