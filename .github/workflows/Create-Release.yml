@@ -49,26 +49,6 @@ jobs:
           sudo -E apt-get clean
           df -h
 
-      # 准备发行
-      - name: Generate tag           
-        run: |
-          echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
-
-      # 创建发行
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ env.RELEASE_TAG }}
-          body: |
-            Build @ By YFDOOR
-            🚀 Automated build | 自动编译
-          draft: false
-          prerelease: false
-
      # 下载源码
       - name: Clone source code
         run: |
@@ -141,6 +121,7 @@ jobs:
           cd openwrt
           zip -r OpenWrt_firmware.zip bin
           find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+          echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
           echo "::set-output name=status::success"           
 
       # 上传固件
@@ -151,12 +132,27 @@ jobs:
           name: OpenWrt_firmware_yfdoor
           path: ./openwrt/bin/targets/
 
+      # 创建发行
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ env.RELEASE_TAG }}
+          body: |
+            Build @ By YFDOOR
+            🚀 Automated build | 自动编译
+          draft: false
+          prerelease: false
+
       # 上传发行
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./openwrt/OpenWrt_firmware.zip
