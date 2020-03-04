@@ -142,12 +142,12 @@ jobs:
       # 创建发行
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ env.RELEASE_TAG }}
+          # release_name: ${{ env.RELEASE_TAG }}
           body: |
             Build @ By YFDOOR
             🚀 Automated build | 自动编译
