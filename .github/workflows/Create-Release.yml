@@ -141,8 +141,7 @@ jobs:
 
       # 创建发行
       - name: Create Release
-        id: create_release
-        #uses: softprops/action-gh-release@v1
+        id: create_release 
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
@@ -152,8 +151,8 @@ jobs:
           body: |
             Build @ By YFDOOR
             🚀 Automated build | 自动编译
-          #draft: false
-          #prerelease: false
+          draft: false
+          prerelease: false
 
       # # 上传发行
       # - name: Upload Release Asset
