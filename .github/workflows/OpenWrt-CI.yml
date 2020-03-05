@@ -75,6 +75,19 @@ jobs:
           sed  '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  '/builddir dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
           more tools/Makefile
+          mkdir -p bin/packages
+
+    - name: Push Branch_Target
+      env:
+       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      run: |
+        cd openwrt/bin/packages
+        git init
+        git config user.name "bot"
+        git config user.email "bot@github.com"
+        git add .
+        git commit -m "TRY"
+        git push --force --quiet https://$RELEASE_TOKEN@github.com/yfdoor/OpenWrt.git  HEAD:x86_64_Target
 
     #   # 更新Feed
     #   - name: Update feeds
