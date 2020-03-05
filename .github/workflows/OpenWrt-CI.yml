@@ -1,0 +1,164 @@
+# This is free software, lisence use MIT.
+# Copyright (C) https://github.com/yfdoor
+
+name: Create-Release
+
+on:
+  #  push:
+  #    branches:
+  #      - master
+  #    paths:
+  #      - '.config'
+  #schedule:
+  #  - cron: 0 0 * * 1
+  watch:
+    types: started
+
+# 编译环境定义
+env:
+  # REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_BRANCH: v19.07.2
+  CONFIG_FILE: config.d/x86_64.config
+  DIY_FILE: script/DIY.sh
+  SSH_ACTIONS: false
+  DIY_ACTIONS: false
+  UPLOAD_BIN_IPK: true
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  PACKAGE_EXTRAS: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      # 项目初始
+      - name: Checkout
+        uses: actions/checkout@master
+
+    #   # 空间清理
+    #   - name: Space cleanup
+    #     env:
+    #       DEBIAN_FRONTEND: noninteractive
+    #     run: |
+    #       docker rmi `docker images -q`
+    #       sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+    #       sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+    #       sudo -E apt-get update
+    #       sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+    #       sudo -E apt-get -y autoremove --purge
+    #       sudo -E apt-get clean
+    #       df -h
+
+     # 下载源码
+      - name: Clone source code
+        run: |
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+          cd openwrt
+          cat feeds.conf.default
+
+    #  # 下载插件
+    #   - name: Copy Lean's Package
+    #     if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+    #     run: |
+    #       cd openwrt
+    #       sudo rm -rf package/lean
+    #       mkdir -p package/lean
+    #       svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
+    #       sudo rm -rf package/lean/.svn/
+ 
+    #   # 更新Feed
+    #   - name: Update feeds
+    #     run: |
+    #       cd openwrt
+    #       ./scripts/feeds update -a
+    #       ./scripts/feeds install -a
+
+    #   # 配置文件
+    #   - name: Configuration file
+    #     run: |
+    #       [ -e files ] && cp files openwrt/files
+    #       [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
+    #       cd openwrt
+    #       make defconfig
+
+    #   # SSH连接
+    #   - name: SSH connection
+    #     uses: yfdoor/debugger-action@master
+    #     if: env.SSH_ACTIONS == 'true'
+
+    #   # 下载依赖
+    #   - name: Make download
+    #     run: |
+    #       cd openwrt
+    #       make download -j8
+    #       find dl/ -size -1024c -exec rm -f {} \;
+
+    #   # 编译固件
+    #   - name: Compile firmware
+    #     id: compile
+    #     run: |
+    #       cd openwrt
+    #       echo -e "$(nproc) thread compile"
+    #       make -j$(nproc) || make -j1 V=s
+    #       echo "======================="
+    #       echo "Space usage:"
+    #       echo "======================="
+    #       df -h
+    #       echo "======================="
+    #       echo "::set-output name=status::success"
+
+    #   # 准备固件
+    #   - name: Organize artifact
+    #     if: steps.compile.outputs.status == 'success'
+    #     run: |
+    #       cd openwrt
+    #       zip -r OpenWrt_firmware.zip bin
+    #       find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+    #       echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+    #       echo "::set-output name=status::success"           
+
+    #   # 上传IPK
+    #   - name: Upload bin IPK
+    #     uses: actions/upload-artifact@master
+    #     if: env.UPLOAD_BIN_IPK == 'true' && steps.compile.outputs.status == 'success'
+    #     with:
+    #      name: OpenWrt_bin_yfdoor
+    #      path: ./openwrt/bin/packages/
+
+    #   # 上传固件
+    #   - name: Upload artifact
+    #     uses: actions/upload-artifact@master
+    #     if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
+    #     with:
+    #       name: OpenWrt_firmware_yfdoor
+    #       path: ./openwrt/bin/targets/
+
+    #   # 创建发行
+    #   - name: Create Release  
+    #     uses: actions/create-release@latest
+    #     if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+    #     with:
+    #       tag_name: ${{ env.RELEASE_DATE }}_TAG
+    #       release_name: OpenWrt_YFDOOR_${{ env.RELEASE_DATE }}
+    #       body: |
+    #         Build By YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
+    #         Automated build | 自动编译
+    #       draft: false
+    #       prerelease: false
+
+    #   # 上传发行
+    #   - name: Upload Release Asset
+    #     uses: actions/upload-release-asset@v1
+    #     if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+    #     with:
+    #       upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+    #       asset_path: ./openwrt/OpenWrt_firmware.zip
+    #       asset_name: OpenWrt_firmware.zip
+    #       asset_content_type: application/zip

@@ -9,10 +9,10 @@ on:
   #      - master
   #    paths:
   #      - '.config'
-  # schedule:
-  #  - cron: 0 0 * * 1
-  watch:
-    types: started
+  schedule:
+    - cron: 0 0 * * 1
+  # watch:
+  #  types: started
 
 # 编译环境定义
 env:
@@ -107,18 +107,18 @@ jobs:
 
       # 准备固件
       - name: Organize artifact
-        if: steps.compile.outputs.status == 'success' && !cancelled()
+        if: steps.compile.outputs.status == 'success'
         run: |
           cd openwrt
           zip -r OpenWrt_firmware.zip bin
           find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
-          echo ::set-env name=RELEASE_TAG::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+          echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
           echo "::set-output name=status::success"           
 
       # 上传IPK
       - name: Upload bin IPK
         uses: actions/upload-artifact@master
-        if: env.UPLOAD_BIN_IPK == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
+        if: env.UPLOAD_BIN_IPK == 'true' && steps.compile.outputs.status == 'success'
         with:
          name: OpenWrt_bin_yfdoor
          path: ./openwrt/bin/packages/
@@ -126,30 +126,30 @@ jobs:
       # 上传固件
       - name: Upload artifact
         uses: actions/upload-artifact@master
-        if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+        if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
         with:
           name: OpenWrt_firmware_yfdoor
           path: ./openwrt/bin/targets/
 
       # 创建发行
-      - name: Create Release
-        id: create_release 
+      - name: Create Release  
         uses: actions/create-release@latest
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ env.RELEASE_TAG }}_TAG
-          release_name: OpenWrt_YFDOOR_${{ env.RELEASE_TAG }}
+          tag_name: ${{ env.RELEASE_DATE }}_TAG
+          release_name: OpenWrt_YFDOOR_${{ env.RELEASE_DATE }}
           body: |
-            Build @ By YFDOOR
-            🚀 Automated build | 自动编译
+            Build By YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
+            Automated build | 自动编译
           draft: false
           prerelease: false
 
       # 上传发行
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
