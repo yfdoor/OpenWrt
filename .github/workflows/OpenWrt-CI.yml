@@ -71,12 +71,11 @@ jobs:
            
           mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
           mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
-          cd tools/ucl
-          ls -l
-          more Makefile
-         
-         sed  '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
-         sed  '/# builddir dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+
+          sed  '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
+          sed  '/# builddir dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          more tools/Makefile
+          
     #   # 更新Feed
     #   - name: Update feeds
     #     run: |
