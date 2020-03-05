@@ -75,7 +75,8 @@ jobs:
           ls -l
           more Makefile
          
- 
+         sed  '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
+         sed  '/# builddir dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
     #   # 更新Feed
     #   - name: Update feeds
     #     run: |
