@@ -69,11 +69,12 @@ jobs:
           svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
           sudo rm -rf package/lean/.svn/
            
-          mkdir -p tools/ucl && wget -P tools/ucl https://github.com/coolsnowwolf/lede/blob/master/tools/ucl/Makefile 
-          mkdir -p tools/upx && wget -P tools/upx https://github.com/coolsnowwolf/lede/blob/master/tools/upx/Makefile 
+          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
+          mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
           cd tools/ucl
           ls -l
           more Makefile
+         
  
     #   # 更新Feed
     #   - name: Update feeds
