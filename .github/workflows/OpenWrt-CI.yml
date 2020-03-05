@@ -76,6 +76,7 @@ jobs:
           sed  '/builddir dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
           more tools/Makefile
           mkdir -p bin/packages
+          touch bin/packages/try.txt
      
      # 下载插件
       - name: Create Target
