@@ -72,11 +72,11 @@ jobs:
           mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
           mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
 
-          sed  '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
-          sed  '/dependencies/a$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          sed  '#tools-$(CONFIG_TARGET_orion_generic)#atools-y += ucl upx#' tools/Makefile
+          sed  '#dependencies#a$(curdir)/upx/compile := $(curdir)/ucl/compile#' tools/Makefile
           more tools/Makefile
           mkdir -p bin/packages
-          touch bin/packages/try.txt
+          touch bin/packages/123.txt
      
      # 下载插件
       - name: Create Target
@@ -85,8 +85,8 @@ jobs:
         run: |
           cd openwrt/bin/packages
           git init
-          git config user.name "bot"
-          git config user.email "bot@github.com"
+          git config user.name "yfdoor"
+          git config user.email "yfdoor@github.com"
           git add .
           git commit -m "TRY"
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git  HEAD:x86_64_Target
