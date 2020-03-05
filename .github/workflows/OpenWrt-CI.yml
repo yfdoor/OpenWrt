@@ -16,8 +16,8 @@ on:
 
 # 编译环境定义
 env:
-  # REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_URL: https://github.com/openwrt/openwrt.git
+  # REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: v19.07.2
   CONFIG_FILE: config.d/x86_64.config
   DIY_FILE: script/DIY.sh
@@ -59,15 +59,22 @@ jobs:
           cd openwrt
           cat feeds.conf.default
 
-    #  # 下载插件
-    #   - name: Copy Lean's Package
-    #     if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
-    #     run: |
-    #       cd openwrt
-    #       sudo rm -rf package/lean
-    #       mkdir -p package/lean
-    #       svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
-    #       sudo rm -rf package/lean/.svn/
+     # 下载插件
+      - name: Copy Lean's Package
+        if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+        run: |
+          cd openwrt
+          sudo rm -rf package/lean
+          mkdir -p package/lean
+          svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
+          sudo rm -rf package/lean/.svn/
+
+          mkdir -p tools/upx tools/ucl
+          wget tools/ucl https://github.com/coolsnowwolf/lede/blob/master/tools/ucl/Makefile 
+          wget tools/upx https://github.com/coolsnowwolf/lede/blob/master/tools/upx/Makefile 
+          cd tools
+          ls -l
+          cat tools/upx/Makefile
  
     #   # 更新Feed
     #   - name: Update feeds
