@@ -118,14 +118,14 @@ jobs:
       - name: Compile Firmware
         id: compile
         run: |
-    #       cd openwrt
-    #       echo -e "$(nproc) thread compile"
-    #       make -j$(nproc) || make -j1 V=s
-    #       echo "======================="
-    #       echo "Space usage:"
-    #       echo "======================="
-    #       df -h
-    #       echo "======================="
+          cd openwrt
+          # echo -e "$(nproc) thread compile"
+          # make -j$(nproc) || make -j1 V=s
+          # echo "======================="
+          # echo "Space usage:"
+          # echo "======================="
+          # df -h
+          # echo "======================="
           echo "::set-output name=status::success"
 
      # 更新分支
