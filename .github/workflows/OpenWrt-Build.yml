@@ -81,12 +81,12 @@ jobs:
           sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
 
-      # # 更新Feed
-      # - name: Update Feeds
-      #   run: |
-      #     cd openwrt
-      #     ./scripts/feeds update -a
-      #     ./scripts/feeds install -a
+      # 更新Feed
+      - name: Update Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
 
       # 配置文件
       - name: Config File
@@ -96,6 +96,7 @@ jobs:
           chmod +x $DIY_FILE
           cd openwrt
           ../$DIY_FILE
+          more .config
           make defconfig
 
       # SSH连接
@@ -103,12 +104,12 @@ jobs:
         if: env.SSH_ACTION == 'true'
         uses: yfdoor/debugger-action@master
 
-    #   # 下载依赖
-    #   - name: Make Download
-    #     run: |
-    #       cd openwrt
-    #       make download -j8
-    #       find dl/ -size -1024c -exec rm -f {} \;
+      # 下载依赖
+      - name: Make Download
+        run: |
+          cd openwrt
+          make download -j8
+          find dl/ -size -1024c -exec rm -f {} \;
 
     #   # 编译固件
     #   - name: Compile Firmware
