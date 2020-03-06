@@ -3,33 +3,37 @@
 
 name: OpenWrt-Build
 
+# 触发条件
 on:
   #  push:
   #    branches:
   #      - master
   #    paths:
   #      - '.config'
-  #schedule:
-  #  - cron: 0 0 * * 1
+  #  schedule:
+  #    - cron: 0 0 * * 1
   watch:
     types: started
 
-# 编译环境定义
-env: 
-  ############################################################################
-  #####   1：编译官方源码；2：编译Lean源码；3：编译官方源码 + Lean Package   #####
-  ############################################################################
-  BUILD_TYPE: 1                                                          #####
-  ############################################################################
-  #####                           定义环境变量                            #####
-  SSH_ACTIONS: false                  
-  DIY_ACTIONS: false
-  UPLOAD_BIN_IPK: true
+# 环境定义
+env:
+  #####################################################
+  #####   1：编译官方源码
+  #####   2：编译Lean源码
+  #####   3：编译官方源码 & Lean Package
+  #####################################################
+  REPO_URL: https://github.com/openwrt/openwrt.git
+  # REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_BRANCH: v19.07.2
+  DIY_FILE: script/DIY.sh
+  CFG_FILE: config.d/x86_64.config
+  PKG_EXTRAS: true
+  SSH_ACTION: false
+  DIY_ACTION: false
+  UPLOAD_PACKAGES: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
-  DIY_FILE: script/DIY.sh
-  ############################################################################
-  
+  #####################################################
 
 jobs:
   build:
@@ -38,48 +42,22 @@ jobs:
 
     steps:
       # 项目初始
-      # - name: Checkout
-      #   uses: actions/checkout@master
+      - name: Code Checkout
+        uses: actions/checkout@master
 
-      - name: Define Env
-        if: env.BUILD_TYPE == '1'
-        env: 
-          REPO_URL: https://github.com/openwrt/openwrt.git
-          REPO_BRANCH: v19.07.2
-          PACKAGE_EXTRAS: false
-          ONFIG_FILE: config.d/x86_64.config
-
-        if: env.BUILD_TYPE == '2' && failure() 
+      # 空间清理
+      - name: Space Cleanup
         env:
-          REPO_URL: https://github.com/coolsnowwolf/lede.git
-          REPO_BRANCH: master
-          PACKAGE_EXTRAS: false
-          CONFIG_FILE: config.d/x86_64.config
-
-        if: env.BUILD_TYPE == '3' && failure() 
-        env:
-          REPO_URL: https://github.com/openwrt/openwrt.git
-          REPO_BRANCH: v19.07.2
-          PACKAGE_EXTRAS: true
-          CONFIG_FILE: config.d/x86_64.config
-      
+          DEBIAN_FRONTEND: noninteractive
         run: |
-          echo $REPO_URL
-          echo $REPO_BRANCH          
-
-    #   # 空间清理
-    #   - name: Space cleanup
-    #     env:
-    #       DEBIAN_FRONTEND: noninteractive
-    #     run: |
-    #       docker rmi `docker images -q`
-    #       sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
-    #       sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-    #       sudo -E apt-get update
-    #       sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
-    #       sudo -E apt-get -y autoremove --purge
-    #       sudo -E apt-get clean
-    #       df -h
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E apt-get update
+          sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          df -h
 
     #  # 下载源码
     #   - name: Clone source code
@@ -90,7 +68,7 @@ jobs:
 
     #  # 下载插件
     #   - name: Copy Lean's Package
-    #     if: env.PACKAGE_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+    #     if: env.PKG_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
     #     run: |
     #       cd openwrt
     #       sudo rm -rf package/lean
@@ -122,7 +100,7 @@ jobs:
     #   # SSH连接
     #   - name: SSH connection
     #     uses: yfdoor/debugger-action@master
-    #     if: env.SSH_ACTIONS == 'true'
+    #     if: env.SSH_ACTION == 'true'
 
     #   # 下载依赖
     #   - name: Make download
@@ -171,7 +149,7 @@ jobs:
     #   # 上传IPK
     #   - name: Upload bin IPK
     #     uses: actions/upload-artifact@master
-    #     if: env.UPLOAD_BIN_IPK == 'true' && steps.compile.outputs.status == 'success'
+    #     if: env.UPLOAD_PACKAGES == 'true' && steps.compile.outputs.status == 'success'
     #     with:
     #      name: OpenWrt_bin_yfdoor
     #      path: ./openwrt/bin/packages/
