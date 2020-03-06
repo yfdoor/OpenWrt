@@ -42,30 +42,30 @@ jobs:
       #   uses: actions/checkout@master
 
       - name: Define Env
-          if: env.BUILD_TYPE == '1'
-          env: 
-            REPO_URL: https://github.com/openwrt/openwrt.git
-            REPO_BRANCH: v19.07.2
-            PACKAGE_EXTRAS: false
-            ONFIG_FILE: config.d/x86_64.config
+        if: env.BUILD_TYPE == '1'
+        env: 
+          REPO_URL: https://github.com/openwrt/openwrt.git
+          REPO_BRANCH: v19.07.2
+          PACKAGE_EXTRAS: false
+          ONFIG_FILE: config.d/x86_64.config
 
-          if: env.BUILD_TYPE == '2'
-          env:
-            REPO_URL: https://github.com/coolsnowwolf/lede.git
-            REPO_BRANCH: master
-            PACKAGE_EXTRAS: false
-            CONFIG_FILE: config.d/x86_64.config
+        if: env.BUILD_TYPE == '2'
+        env:
+          REPO_URL: https://github.com/coolsnowwolf/lede.git
+          REPO_BRANCH: master
+          PACKAGE_EXTRAS: false
+          CONFIG_FILE: config.d/x86_64.config
 
-          if: env.BUILD_TYPE == '3'
-          env:
-            REPO_URL: https://github.com/openwrt/openwrt.git
-            REPO_BRANCH: v19.07.2
-            PACKAGE_EXTRAS: true
-            CONFIG_FILE: config.d/x86_64.config
+        if: env.BUILD_TYPE == '3'
+        env:
+          REPO_URL: https://github.com/openwrt/openwrt.git
+          REPO_BRANCH: v19.07.2
+          PACKAGE_EXTRAS: true
+          CONFIG_FILE: config.d/x86_64.config
       
-          run: |
-            echo $REPO_URL
-            echo $REPO_BRANCH          
+        run: |
+          echo $REPO_URL
+          echo $REPO_BRANCH          
 
     #   # 空间清理
     #   - name: Space cleanup
