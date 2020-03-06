@@ -26,7 +26,7 @@ env:
   # REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: v19.07.2
   DIY_FILE: script/DIY.sh
-  CFG_FILE: config.d/x86_64.config
+  CON_FILE: config.d/x86_64.config
   PKG_EXTRAS: true
   SSH_ACTION: false
   DIY_ACTION: false
@@ -59,48 +59,46 @@ jobs:
           sudo -E apt-get clean
           df -h
 
-    #  # 下载源码
-    #   - name: Clone source code
-    #     run: |
-    #       git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-    #       cd openwrt
-    #       cat feeds.conf.default
+     # 下载源码
+      - name: Clone Source Code
+        run: |
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
-    #  # 下载插件
-    #   - name: Copy Lean's Package
-    #     if: env.PKG_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
-    #     run: |
-    #       cd openwrt
-    #       sudo rm -rf package/lean
-    #       mkdir -p package/lean
-    #       svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
-    #       sudo rm -rf package/lean/.svn/
-           
-    #       mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
-    #       mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
+     # 下载插件
+      - name: Download Package
+        if: env.PKG_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+        run: |
+          cd openwrt
+          sudo rm -rf package/lean
+          mkdir -p package/lean
+          svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
+          sudo rm -rf package/lean/.svn/
+       
+          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
+          mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
 
-    #       sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
-    #       sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
+          sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
 
-    #   # 更新Feed
-    #   - name: Update feeds
-    #     run: |
-    #       cd openwrt
-    #       ./scripts/feeds update -a
-    #       ./scripts/feeds install -a
+      # 更新Feed
+      - name: Update Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
 
-    #   # 配置文件
-    #   - name: Configuration file
-    #     run: |
-    #       [ -e files ] && cp files openwrt/files
-    #       [ -e config.d/x86_64.config ] && cp config.d/x86_64.config openwrt/.config
-    #       cd openwrt
-    #       make defconfig
+      # 配置文件
+      - name: Config File
+        run: |
+          [ -e files ] && cp files openwrt/files
+          [ -e config.d/x86_64.config ] && cp evn.CON_FILE openwrt/.config
+          cd openwrt
+          make defconfig
 
-    #   # SSH连接
-    #   - name: SSH connection
-    #     uses: yfdoor/debugger-action@master
-    #     if: env.SSH_ACTION == 'true'
+      # SSH连接
+      - name: SSH Connection
+        uses: yfdoor/debugger-action@master
+        if: env.SSH_ACTION == 'true'
 
     #   # 下载依赖
     #   - name: Make download
