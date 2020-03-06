@@ -23,7 +23,7 @@ env:
   #####   3：编译官方源码 & Lean Package
   #####################################################
   REPO_URL: https://github.com/openwrt/openwrt.git
-  # REPO_URL: https://github.com/coolsnowwolf/lede.git
+  ## REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: v19.07.2
   DIY_FILE: script/DIY.sh
   CON_FILE: x86_64
@@ -114,10 +114,10 @@ jobs:
           mkdir -p bin/targets
 
 
-    #   # 编译固件
-    #   - name: Compile Firmware
-    #     id: compile
-    #     run: |
+      # 编译固件
+      - name: Compile Firmware
+        id: compile
+        run: |
     #       cd openwrt
     #       echo -e "$(nproc) thread compile"
     #       make -j$(nproc) || make -j1 V=s
@@ -126,7 +126,7 @@ jobs:
     #       echo "======================="
     #       df -h
     #       echo "======================="
-    #       echo "::set-output name=status::success"
+          echo "::set-output name=status::success"
 
      # 更新分支
       - name: Update Branch
@@ -145,22 +145,22 @@ jobs:
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_$CON_FILE
           sudo rm -rf OpenWrt_Packages_$CON_FILE.zip OpenWrt_Targets_$CON_FILE.zip
 
-    #   # 准备固件
-    #   - name: Organize Artifact
-    #     if: steps.compile.outputs.status == 'success'
-    #     run: |
-    #       cd openwrt/bin
-    #       find ./targets/ -type d -name "packages" | xargs rm -rf {}
-    #       zip -r OpenWrt_Targets.zip targets
-    #       echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+      # 准备固件
+      - name: Organize Artifact
+        if: steps.compile.outputs.status == 'success'
+        run: |
+          cd openwrt/bin
+          find ./targets/ -type d -name "packages" | xargs rm -rf {}
+          zip -r OpenWrt_Targets_$CON_FILE.zip targets
+          echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
 
-    #   # 上传固件
-    #   - name: Upload Artifact
-    #     uses: actions/upload-artifact@master
-    #     if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
-    #     with:
-    #       name: OpenWrt_firmware_yfdoor
-    #       path: ./openwrt/bin/targets/
+      # 上传固件
+      - name: Upload Artifact
+        uses: actions/upload-artifact@master
+        if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
+        with:
+          name: OpenWrt_Targets_${{ env.CON_FILE }}
+          path: ./openwrt/bin/targets/
 
     #   # 创建发行
     #   - name: Create Release  
