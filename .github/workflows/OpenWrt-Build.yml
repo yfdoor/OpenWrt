@@ -96,7 +96,6 @@ jobs:
           chmod +x $DIY_FILE
           cd openwrt
           ../$DIY_FILE
-          more .config
           make defconfig
 
       # SSH连接
@@ -110,9 +109,6 @@ jobs:
           cd openwrt
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
-          mkdir -p bin/packages
-          mkdir -p bin/targets
-
 
       # 编译固件
       - name: Compile Firmware
@@ -151,7 +147,7 @@ jobs:
         run: |
           cd openwrt/bin
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
-          zip -r OpenWrt_Targets_$CON_FILE.zip targets
+          zip -r OpenWrt.zip targets
           echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
 
       # 上传固件
@@ -162,29 +158,32 @@ jobs:
           name: OpenWrt_Targets_${{ env.CON_FILE }}
           path: ./openwrt/bin/targets/
 
-    #   # 创建发行
-    #   - name: Create Release  
-    #     uses: actions/create-release@latest
-    #     if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-    #     with:
-    #       tag_name: ${{ env.RELEASE_DATE }}_TAG
-    #       release_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}
-    #       body: |
-    #         Build By YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
-    #         Automated build | 自动编译
-    #       draft: false
-    #       prerelease: false
+      # 创建发行
+      - name: Create Release  
+        uses: actions/create-release@latest
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.RELEASE_DATE }}_TAG
+          release_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}
+          body: |
+            1、本固件自动编译
+            2、发行版中只提供完整的固件
+            3、需要单独IPK请到分支下载
+            -- Build By YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
+            -- Automated build | 自动编译
+          draft: false
+          prerelease: false
 
-    #   # 上传发行
-    #   - name: Upload Release
-    #     uses: actions/upload-release-asset@v1
-    #     if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-    #     with:
-    #       upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-    #       asset_path: ./openwrt/bin/OpenWrt_Targets.zip
-    #       asset_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}.zip
-    #       asset_content_type: application/zip
+      # 上传发行
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./openwrt/bin/OpenWrt.zip
+          asset_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}.zip
+          asset_content_type: application/zip
