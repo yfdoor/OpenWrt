@@ -159,7 +159,7 @@ jobs:
         uses: actions/upload-artifact@master
         if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
         with:
-          name: OpenWrt_Targets_${{ env.CON_FILE }}
+          name: OpenWrt_Firmware_${{ env.CON_FILE }}
           path: ./openwrt/bin/targets/
 
       # 创建发行
@@ -171,11 +171,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ env.RELEASE_DATE }}_TAG
-          release_name: OpenWrt_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}
+          release_name: OpenWrt_${{ env.env.CON_FILE }}_${{ env.RELEASE_DATE }}
           body: |
-            1、本固件自动编译
+            1、本固件为自动编译
             2、发行版中只提供完整的固件
             3、需要单独IPK请到分支下载
+            4、源码：${{ env.REPO_URL }} with Lean's package option：${{ env.PKG_EXTRAS }}
+            5、分支：${{ env.REPO_BRANCH }}            
             -- Build By YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
             -- Automated build | 自动编译
           draft: false
@@ -190,5 +192,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./openwrt/bin/OpenWrt_Firmware.zip
-          asset_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}.zip
+          asset_name: OpenWrt_YFDOOR_${{ env.env.CON_FILE }}_${{ env.RELEASE_DATE }}.zip
           asset_content_type: application/zip
