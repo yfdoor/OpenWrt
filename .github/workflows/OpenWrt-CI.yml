@@ -19,7 +19,7 @@ env:
   ############################################################################
   #####   1：编译官方源码；2：编译Lean源码；3：编译官方源码 + Lean Package   #####
   ############################################################################
-  Build_Type: 1                                                          #####
+  BUILD_TYPE: 1                                                          #####
   ############################################################################
   #####                           定义环境变量                            #####
   SSH_ACTIONS: false                  
@@ -42,21 +42,21 @@ jobs:
       #   uses: actions/checkout@master
 
       - name: Define Env
-          if: env.Build_Type == "1"
+          if: env.BUILD_TYPE == '1'
           env: 
             REPO_URL: https://github.com/openwrt/openwrt.git
             REPO_BRANCH: v19.07.2
             PACKAGE_EXTRAS: false
             ONFIG_FILE: config.d/x86_64.config
 
-          if: env.Build_Type == "2"  
+          if: env.BUILD_TYPE == '2'
           env:
             REPO_URL: https://github.com/coolsnowwolf/lede.git
             REPO_BRANCH: master
             PACKAGE_EXTRAS: false
             CONFIG_FILE: config.d/x86_64.config
 
-          if: env.Build_Type == "3"  
+          if: env.BUILD_TYPE == '3'
           env:
             REPO_URL: https://github.com/openwrt/openwrt.git
             REPO_BRANCH: v19.07.2
