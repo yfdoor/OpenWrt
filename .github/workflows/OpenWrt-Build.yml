@@ -109,6 +109,10 @@ jobs:
           cd openwrt
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
+          mkdir -p bin/packages
+          mkdir -p bin/targets
+          touch bin/packages/123.txt
+          touch bin/targets/456.txt
 
       # 编译固件
       - name: Compile Firmware
