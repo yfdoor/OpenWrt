@@ -147,7 +147,7 @@ jobs:
         run: |
           cd openwrt/bin
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
-          zip -r OpenWrt Firmware.zip targets
+          zip -r OpenWrt_Firmware.zip targets
           echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
 
       # 上传固件
@@ -185,6 +185,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./openwrt/bin/OpenWrt.zip
+          asset_path: ./openwrt/bin/OpenWrt_Firmware.zip
           asset_name: OpenWrt_YFDOOR_${{ env.REPO_BRANCH }}_${{ env.RELEASE_DATE }}.zip
           asset_content_type: application/zip
