@@ -109,10 +109,6 @@ jobs:
           cd openwrt
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
-          mkdir -p bin/packages
-          mkdir -p bin/targets
-          touch bin/packages/123.txt
-          touch bin/targets/456.txt
 
       # 编译固件
       - name: Compile Firmware
@@ -151,7 +147,7 @@ jobs:
         run: |
           cd openwrt/bin
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
-          zip -r OpenWrt.zip targets
+          zip -r OpenWrt Firmware.zip targets
           echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
 
       # 上传固件
