@@ -49,14 +49,14 @@ jobs:
           PACKAGE_EXTRAS: false
           ONFIG_FILE: config.d/x86_64.config
 
-        if: env.BUILD_TYPE == '2'
+        if: env.BUILD_TYPE == '2' && failure() 
         env:
           REPO_URL: https://github.com/coolsnowwolf/lede.git
           REPO_BRANCH: master
           PACKAGE_EXTRAS: false
           CONFIG_FILE: config.d/x86_64.config
 
-        if: env.BUILD_TYPE == '3'
+        if: env.BUILD_TYPE == '3' && failure() 
         env:
           REPO_URL: https://github.com/openwrt/openwrt.git
           REPO_BRANCH: v19.07.2
