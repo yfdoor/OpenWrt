@@ -30,9 +30,9 @@ env:
   PKG_EXTRAS: true
   SSH_ACTION: false
   DIY_ACTION: false
-  UPLOAD_PACKAGES: true
-  UPLOAD_FIRMWARE: true
+  UPLOAD_BRANCH: true
   UPLOAD_RELEASE: true
+  UPLOAD_FIRMWARE: true
   #####################################################
 
 jobs:
@@ -91,69 +91,65 @@ jobs:
       - name: Config File
         run: |
           [ -e files ] && cp files openwrt/files
-          [ -e config.d/x86_64.config ] && cp evn.CON_FILE openwrt/.config
+          [ -e config.d/x86_64.config ] && cp env.CON_FILE openwrt/.config
           cd openwrt
           make defconfig
 
       # SSH连接
       - name: SSH Connection
-        uses: yfdoor/debugger-action@master
         if: env.SSH_ACTION == 'true'
+        uses: yfdoor/debugger-action@master
 
-    #   # 下载依赖
-    #   - name: Make download
-    #     run: |
-    #       cd openwrt
-    #       make download -j8
-    #       find dl/ -size -1024c -exec rm -f {} \;
+      # 下载依赖
+      - name: Make Download
+        run: |
+          cd openwrt
+          make download -j8
+          find dl/ -size -1024c -exec rm -f {} \;
 
-    #   # 编译固件
-    #   - name: Compile firmware
-    #     id: compile
-    #     run: |
-    #       cd openwrt
-    #       echo -e "$(nproc) thread compile"
-    #       make -j$(nproc) || make -j1 V=s
-    #       echo "======================="
-    #       echo "Space usage:"
-    #       echo "======================="
-    #       df -h
-    #       echo "======================="
-    #       echo "::set-output name=status::success"
+      # 编译固件
+      - name: Compile Firmware
+        id: compile
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          make -j$(nproc) || make -j1 V=s
+          echo "======================="
+          echo "Space usage:"
+          echo "======================="
+          df -h
+          echo "======================="
+          echo "::set-output name=status::success"
 
-    #  # 下载插件
-    #   - name: Create Target
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-    #     run: |
-    #       cd openwrt/bin
-    #       git init
-    #       git config user.name "yfdoor"
-    #       git config user.email "yfdoor@github.com"
-    #       git add .
-    #       git commit -m "update x86_64 target"
-    #       git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git  HEAD:x86_64_Target
+     # 更新分支
+      - name: Update Branch
+        if: env.UPLOAD_BRANCH == 'true' && steps.compile.outputs.status == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          cd openwrt/bin
+          zip -r OpenWrt_Packages.zip packages
+          zip -r OpenWrt_Targets.zip targets
+          git init
+          git config user.name "yfdoor"
+          git config user.email "yfdoor@github.com"
+          git add .
+          git commit -m "update OpenWrt_x86_64 target"
+          git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_x86_64
+          sudo rm -rf OpenWrt_Packages.zip OpenWrt_Targets.zip
 
     #   # 准备固件
-    #   - name: Organize artifact
+    #   - name: Organize Artifact
     #     if: steps.compile.outputs.status == 'success'
     #     run: |
     #       cd openwrt
     #       zip -r OpenWrt_firmware.zip bin
     #       find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
     #       echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
-    #       echo "::set-output name=status::success"           
-
-    #   # 上传IPK
-    #   - name: Upload bin IPK
-    #     uses: actions/upload-artifact@master
-    #     if: env.UPLOAD_PACKAGES == 'true' && steps.compile.outputs.status == 'success'
-    #     with:
-    #      name: OpenWrt_bin_yfdoor
-    #      path: ./openwrt/bin/packages/
+    #       echo "::set-output name=status::success" 
 
     #   # 上传固件
-    #   - name: Upload artifact
+    #   - name: Upload Artifact
     #     uses: actions/upload-artifact@master
     #     if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
     #     with:
