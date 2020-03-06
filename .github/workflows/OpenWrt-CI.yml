@@ -40,6 +40,8 @@ jobs:
       # 项目初始
       - name: Checkout
         uses: actions/checkout@master
+
+      - name: Define Env
         run: |
           case $Build_Type in
             1) env: 
