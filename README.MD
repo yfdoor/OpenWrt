@@ -9,7 +9,7 @@
   2. 编译Lean源码
   3. 编译官方源码 & Lean Package
 - 变量：
-  - REPO_URL: https://github.com/openwrt/openwrt.git  **## 定义源码
+  - REPO_URL: https://github.com/openwrt/openwrt.git  // 定义源码
   - REPO_BRANCH: v19.07.2                             **## 定义分支
   - DIY_FILE: script/DIY.sh                           **## 定义脚本文件
   - CON_FILE: x86_64                                  **## 定义配置文件
