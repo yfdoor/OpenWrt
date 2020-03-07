@@ -8,16 +8,24 @@
   1. 编译官方源码
   2. 编译Lean源码
   3. 编译官方源码 & Lean Package
-- 变量：
-  - REPO_URL: https://github.com/openwrt/openwrt.git  // 定义源码
-  - REPO_BRANCH: v19.07.2                             **## 定义分支
-  - DIY_FILE: script/DIY.sh                           **## 定义脚本文件
-  - CON_FILE: x86_64                                  **## 定义配置文件
-  - PKG_EXTRAS: true                                  **## 是否包含Lean's package
-  - SSH_ACTION: false                                 **## 是否打开 SSH
-  - UPLOAD_BRANCH: true                               **## 是否创建分支来存放编译固件及package
-  - UPLOAD_RELEASE: true                              **## 是否创建发行版本 Release
-  - UPLOAD_FIRMWARE: true                             **## 是否创建固件到 Artifact
+- 自动上传固件
+- 自动发布固件
+- 自动创建分支
+- 自动同步码云
+
+## 变量：
+
+| 变量名 | 释义 |
+| :--- | :--- |
+| -- REPO_URL: https://github.com/openwrt/openwrt.git  | 定义源码 |
+| -- REPO_BRANCH: v19.07.2 | 定义分支 |
+| -- DIY_FILE: script/DIY.sh | 定义脚本文件 |
+| -- CON_FILE: x86_64 | 定义配置文件 |
+| -- PKG_EXTRAS: true | 是否包含Lean's package |
+| -- SSH_ACTION: false |是否打开 SSH |
+| -- UPLOAD_BRANCH: true | 是否创建分支来存放编译固件及package |
+| -- UPLOAD_RELEASE: true | 是否创建发行版本 Release |
+| -- UPLOAD_FIRMWARE: true | 是否创建固件到 Artifact |
 
 ## 目录：
 - ### config.d：
