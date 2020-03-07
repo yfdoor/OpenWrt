@@ -34,6 +34,10 @@
 - ### script:
   - 目录存放需要执行的脚本
   - 默认文件 DIY
+
+- ### files:
+  - 定制文件：在很多情况下，您可能需要使用自己准备好的配置去创建一个自己定制的固件。
+  - 举例：假如说您需要一个使用预配置文件/etc/config/firewall来构建固件，那么把您的firewall配置文件文件放到下面的路径：/files/etc/config
   
 ## 自定义：
   - /include/target.mk：可定义默认安装的 packages。
