@@ -125,7 +125,7 @@ jobs:
           echo "::set-output name=status::success"
 
      # 更新分支
-      - name: Update Branch
+      - name: Upload Branch
         if: env.UPLOAD_BRANCH == 'true' && steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
