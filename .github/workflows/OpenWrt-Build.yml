@@ -131,15 +131,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cd openwrt/bin
-          zip -r OpenWrt_Packages.zip packages
-          zip -r OpenWrt_Targets.zip targets
+          zip -r OpenWrt_Packages.zip -s 100m packages
+          zip -r OpenWrt_Targets.zip -s 100m targets
           git init
           git config user.name "yfdoor"
           git config user.email "yfdoor@github.com"
           git add .
           git commit -m "Update OpenWrt_"$CON_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_$CON_FILE
-          sudo rm -rf OpenWrt_Packages.zip OpenWrt_Targets.zip
+          # sudo rm -rf OpenWrt_Packages.z* OpenWrt_Targets.z* .*
 
       # 准备固件
       - name: Organize Artifact
