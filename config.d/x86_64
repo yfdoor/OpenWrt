@@ -64,6 +64,8 @@ CONFIG_LUCI_LANG_zh_Hans=y
 
 # My Packages
 CONFIG_PACKAGE_luci-app-adbyby-plus=m
-CONFIG_PACKAGE_luci-app-ssr-plus=m
+CONFIG_PACKAGE_luci-app-ssr-plus=y
 CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
+CONFIG_PACKAGE_luci-app-adguardhome=y
+CONFIG_PACKAGE_AdGuardHome=y
