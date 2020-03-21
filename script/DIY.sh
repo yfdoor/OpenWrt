@@ -11,6 +11,10 @@ git clone https://github.com/rufengsuixing/luci-app-adguardhome.git             
 # Define Default
 cat > package/lean/default-settings/files/zzz-default-settings <<-EOF
     #!/bin/sh
+    # set luci
+    #uci set luci.main.lang=zh_cn
+    #uci commit luci  
+    
     # set time zone
     uci set system.@system[0].timezone=CST-8
     uci set system.@system[0].zonename=Asia/Shanghai
@@ -25,8 +29,8 @@ cat > package/lean/default-settings/files/zzz-default-settings <<-EOF
     echo "iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
     echo "iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
 
-    # Clear tmp
-    rm -rf /tmp/luci-*
+    # clear tmp
+    rm -rf /tmp/luci*
 
     exit 0
 EOF
