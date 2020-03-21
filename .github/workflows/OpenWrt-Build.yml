@@ -139,7 +139,6 @@ jobs:
           git add .
           git commit -m "Update OpenWrt_"$CON_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_$CON_FILE
-          # sudo rm -rf OpenWrt_Packages.z* OpenWrt_Targets.z* .*
 
       # 准备固件
       - name: Organize Artifact
