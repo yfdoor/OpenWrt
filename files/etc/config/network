@@ -21,7 +21,7 @@ config interface 'wan'
 	option username '02298947996'
 	option ifname 'eth0'
 	option ipv6 'auto'
-	option password ''
+	option password '98947996'
 
 config interface 'wan6'
 	option proto 'dhcpv6'
