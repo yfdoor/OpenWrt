@@ -46,3 +46,7 @@
   
 ## 发布:
   - [最新发布](https://github.com/yfdoor/OpenWrt/releases/latest)
+  
+## 感谢：
+  - [OpenWrt](https://github.com/openwrt/openwrt)
+  - [Lean LEDE](https://github.com/coolsnowwolf/lede)
