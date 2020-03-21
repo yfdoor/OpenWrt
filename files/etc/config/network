@@ -16,7 +16,6 @@ config interface 'lan'
 	option ip6assign '60'
 	option type 'bridge'
 
-
 config interface 'wan'
 	option ifname 'eth0'	
 	option proto 'pppoe'
