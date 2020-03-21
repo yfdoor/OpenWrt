@@ -21,6 +21,7 @@ CONFIG_KERNEL_BUILD_DOMAIN="yfdoor@github"
 CONFIG_KERNEL_BUILD_USER="yfdoor"
 
 # Base package
+CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-compat=y
 
 # Base system
