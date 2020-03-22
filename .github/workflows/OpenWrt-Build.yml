@@ -27,7 +27,8 @@ env:
   REPO_BRANCH: v19.07.2
   DIY_FILE: DIY.sh
   CON_FILE: x86_64
-  PKG_EXTRAS: true
+  PKG_LEAN: true
+  PKG_LIENOL: true
   SSH_ACTION: false
   UPLOAD_BRANCH: true
   UPLOAD_RELEASE: false
@@ -66,8 +67,8 @@ jobs:
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
      # 下载插件
-      - name: Download Package
-        if: env.PKG_EXTRAS == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
+      - name: Download Lean Package
+        if: env.PKG_LEAN == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
           sudo rm -rf package/lean
@@ -80,6 +81,13 @@ jobs:
 
           sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+
+     # 下载插件
+      - name: Download Lienol Package
+        if: env.PKG_LIENOL == 'true'
+        run: |
+          cd openwrt
+          echo "src-git yfdoor https://github.com/Lienol/openwrt-package" >> feeds.conf.default
 
       # 更新Feed
       - name: Update Feeds
@@ -173,7 +181,8 @@ jobs:
             3、需要单独IPK请到分支下载
             4、源码：${{ env.REPO_URL }}
             5、分支：${{ env.REPO_BRANCH }}
-            6、Lean's package option：${{ env.PKG_EXTRAS }}
+            6、Lean's package option：${{ env.PKG_LEAN }}
+            7、Lienol's package option：${{ env.PKG_LIENOL }}
             -- Build by YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
             -- Automated build | 自动编译
           draft: false
