@@ -10,11 +10,7 @@ git clone https://github.com/rufengsuixing/luci-app-adguardhome.git             
 
 # Define Default
 cat > package/lean/default-settings/files/zzz-default-settings <<-EOF
-#!/bin/sh
-    # set luci language
-    # uci set luci.main.lang=zh_cn
-    # uci commit luci  
-    
+#!/bin/sh    
     # set time zone
     uci set system.@system[0].timezone=CST-8
     uci set system.@system[0].zonename=Asia/Shanghai
