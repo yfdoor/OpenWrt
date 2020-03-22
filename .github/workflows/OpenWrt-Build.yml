@@ -19,11 +19,12 @@ on:
 env:
   #####################################################
   #####   1：编译官方源码
-  #####   2：编译Lean源码
-  #####   3：编译官方源码 & Lean Package
+  #####   2：编译第三方源码
+  #####   3：编译官方源码 & 第三方 Package
   #####################################################
   REPO_URL: https://github.com/openwrt/openwrt.git
   ## REPO_URL: https://github.com/coolsnowwolf/lede.git
+  ## REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: v19.07.2
   DIY_FILE: DIY.sh
   CON_FILE: x86_64
