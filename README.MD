@@ -1,7 +1,7 @@
 # OpenWrt
 
 ## 简介：
-- 自用 OpenWrt 项目
+- 自用 OpenWrt 定制项目
 
 ## 功能：
 - 可以支持三种编译模式 
@@ -33,15 +33,15 @@
   - 默认使用 **x86_64** 配置文件
 
 - ### script:
-  - 目录存放需要执行的脚本
-  - 默认文件 DIY
+  - 目录存放需要执行的定制脚本
+  - 默认使用 **DIY** 配置文件
 
 - ### files:
-  - 定制文件：在很多情况下，您可能需要使用自己准备好的配置去创建一个自己定制的固件。
-  - 举例：假如说您需要一个使用预配置文件/etc/config/firewall来构建固件，那么把您的firewall配置文件文件放到下面的路径：/files/etc/config
+  - 目录存放定制文件
+  - 举例：假如说您需要一个使用预配置文件 /etc/config/firewall 来构建固件，那么把您的 **firewall** 配置文件文件放到下面的路径：/files/etc/config
   
 ## 尾巴：
-  - /include/target.mk：可定义默认安装的 packages。
+  - /include/target.mk：可定义默认安装的 packages
   - /target/linux/x86/Makefile：可定义对应平台默认安装的 packages（X86示例）
   
 ## 发布:
