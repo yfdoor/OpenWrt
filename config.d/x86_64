@@ -38,11 +38,15 @@ CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-compat=y
 
 # My Packages
-CONFIG_PACKAGE_luci-app-adbyby-plus=m
-CONFIG_PACKAGE_luci-app-unblockmusic=m
-
+CONFIG_PACKAGE_luci-app-adbyby-plus=y
+CONFIG_PACKAGE_luci-app-unblockmusic=y
 CONFIG_PACKAGE_luci-app-ssr-plus=y
 CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
 CONFIG_PACKAGE_luci-app-adguardhome=y
 CONFIG_PACKAGE_default-settings=y
+CONFIG_PACKAGE_luci-app-control-mia=y
+CONFIG_PACKAGE_luci-app-control-webrestriction=y
+CONFIG_PACKAGE_luci-app-flowoffload=y
+CONFIG_PACKAGE_luci-app-minidlna=y
+CONFIG_PACKAGE_luci-app-passwall=y
