@@ -36,6 +36,7 @@ CONFIG_LUCI_LANG_zh_Hans=y
 # Base package
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-compat=y
+CONFIG_PACKAGE_luci-lib-ipkg=y
 
 # My Packages
 CONFIG_PACKAGE_luci-app-adbyby-plus=y
