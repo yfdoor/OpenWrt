@@ -20,6 +20,7 @@ cat > package/lean/default-settings/files/zzz-default-settings <<-EOF
     cp /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_BK
     sed -i 's#http://downloads.openwrt.org#http://mirrors.tuna.tsinghua.edu.cn/openwrt#g' /etc/opkg/distfeeds.conf
     sed -i '/lienol/d' /etc/opkg/distfeeds.conf
+    sed -i '/yfdoor/d' /etc/opkg/distfeeds.conf
     
     # set firewall
     sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
