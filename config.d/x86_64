@@ -21,10 +21,6 @@ CONFIG_TARGET_ROOTFS_PARTSIZE=496
 CONFIG_KERNEL_BUILD_DOMAIN="yfdoor@github"
 CONFIG_KERNEL_BUILD_USER="yfdoor"
 
-# Global build settings
-#CONFIG_ALL_KMODS=y
-#CONFIG_ALL_NONSHARED=y
-
 # Base system
 # CONFIG_PACKAGE_dnsmasq is not set
 # CONFIG_PACKAGE_dnsmasq-dhcpv6 is not set
@@ -40,12 +36,11 @@ CONFIG_PACKAGE_luci-lib-ipkg=y
 
 # My Packages
 CONFIG_PACKAGE_luci-app-adguardhome=y
-CONFIG_PACKAGE_luci-app-adbyby-plus=y
-CONFIG_PACKAGE_luci-app-unblockmusic=y
 CONFIG_PACKAGE_luci-app-ssr-plus=y
+CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_luci-app-control-mia=y
 CONFIG_PACKAGE_luci-app-control-webrestriction=y
-CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-control-timewol=y
 
 CONFIG_PACKAGE_ddns-scripts_aliyun=y
 CONFIG_PACKAGE_default-settings=y
