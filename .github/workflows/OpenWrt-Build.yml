@@ -33,7 +33,7 @@ env:
   SSH_ACTION: false
   UPLOAD_BRANCH: true
   UPLOAD_RELEASE: false
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   #####################################################
 
 jobs:
@@ -76,14 +76,14 @@ jobs:
           mkdir -p package/lean
           svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
           sudo rm -rf package/lean/.svn/
-       
+
           mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
           mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
 
           sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
-          
-          echo "src-git yfdoors https://github.com/fw876/helloworld">> feeds.conf.default
+
+          echo "src-git yfdoor https://github.com/fw876/helloworld">> feeds.conf.default
 
      # 下载插件
       - name: Download Lienol Package
