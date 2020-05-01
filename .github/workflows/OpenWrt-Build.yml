@@ -90,13 +90,6 @@ jobs:
           cd openwrt
           echo "src-git yfdoor https://github.com/Lienol/openwrt-package" >> feeds.conf.default
 
-      # 更新Feed
-      - name: Update Feeds
-        run: |
-          cd openwrt
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-
       # 配置文件
       - name: Config File
         run: |
@@ -105,7 +98,13 @@ jobs:
           chmod +x script/$DIY_FILE
           cd openwrt
           ../script/$DIY_FILE
-          make defconfig
+          
+      # 更新Feed
+      - name: Update Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
 
       # SSH连接
       - name: SSH Connection
@@ -116,6 +115,7 @@ jobs:
       - name: Make Download
         run: |
           cd openwrt
+          make defconfig
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
 
