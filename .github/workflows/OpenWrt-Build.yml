@@ -26,8 +26,9 @@ env:
   ## REPO_URL: https://github.com/coolsnowwolf/lede.git
   ## REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: v19.07.2
-  DIY_FILE: DIY.sh
-  CON_FILE: x86_64
+  DIY0_FILE: DIY0.sh
+  DIY1_FILE: DIY1.sh
+  CONF_FILE: x86_64
   PKG_LEAN: true
   PKG_LIENOL: true
   SSH_ACTION: false
@@ -90,14 +91,12 @@ jobs:
           cd openwrt
           echo "src-git yfdoor https://github.com/Lienol/openwrt-package" >> feeds.conf.default
 
-      # 配置文件
-      - name: Config File
+      # 自定插件
+      - name: Download My Package
         run: |
-          [ -e files ] && cp -r -f files openwrt/files
-          [ -e $CONFIG_FILE ] && cp -r -f config.d/$CON_FILE openwrt/.config
-          chmod +x script/$DIY_FILE
+          chmod +x script/$DIY0_FILE
           cd openwrt
-          ../script/$DIY_FILE
+          ../script/$DIY0_FILE
           
       # 更新Feed
       - name: Update Feeds
@@ -105,6 +104,16 @@ jobs:
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          
+      # 配置文件
+      - name: Config File
+        run: |
+          [ -e files ] && cp -r -f files openwrt/files
+          [ -e $CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
+          chmod +x script/$DIY1_FILE
+          cd openwrt
+          ../script/$DIY1_FILE
+          make defconfig
 
       # SSH连接
       - name: SSH Connection
@@ -115,7 +124,6 @@ jobs:
       - name: Make Download
         run: |
           cd openwrt
-          make defconfig
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
 
@@ -146,8 +154,8 @@ jobs:
           git config user.name "yfdoor"
           git config user.email "yfdoor@github.com"
           git add .
-          git commit -m "Update OpenWrt_"$CON_FILE
-          git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_$CON_FILE
+          git commit -m "Update OpenWrt_"$CONF_FILE
+          git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_$CONF_FILE
 
       # 准备固件
       - name: Organize Artifact
