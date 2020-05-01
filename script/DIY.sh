@@ -6,6 +6,7 @@
 sed -i 's/192.168.1.1/192.168.100.1/g' package/base-files/files/bin/config_generate
 
 # Define My Package
+git clone https://github.com/yfdoor/openwrt-adguardhome.git                         package/yfdoor/adguardhome
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git                 package/yfdoor/luci-app-adguardhome
 git clone https://github.com/fw876/helloworld.git                                   package/yfdoor/luci-app-ssr-plus
 
