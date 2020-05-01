@@ -6,3 +6,4 @@
 git clone https://github.com/yfdoor/openwrt-adguardhome.git                         package/yfdoor/adguardhome
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git                 package/yfdoor/luci-app-adguardhome
 git clone https://github.com/fw876/helloworld.git                                   package/yfdoor/luci-app-ssr-plus
+
