@@ -109,7 +109,7 @@ jobs:
       - name: Config File
         run: |
           [ -e files ] && cp -r -f files openwrt/files
-          [ -e $CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
+          [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
           chmod +x script/$DIY1_FILE
           cd openwrt
           ../script/$DIY1_FILE
