@@ -27,7 +27,7 @@ env:
   REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: dev-19.07
   DIY0_FILE: DIY0.sh
-  DIY1_FILE: DIY1.sh
+  DIY1_FILE: DIY2.sh
   CONF_FILE: x86_64
   PKG_LEAN: false
   PKG_LIENOL: false
