@@ -29,7 +29,7 @@ env:
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY2.sh
   CONF_FILE: x86_64
-  PKG_LEAN: false
+  PKG_LEAN: true
   PKG_LIENOL: false
   SSH_ACTION: false
   UPLOAD_BRANCH: true
@@ -62,10 +62,12 @@ jobs:
           echo "======================="
           df -h
           echo "======================="
+
      # 下载源码
       - name: Clone Code
         run: |
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+
      # 下载插件
       - name: Download Lean Package
         if: env.PKG_LEAN == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
@@ -79,12 +81,14 @@ jobs:
           mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
           sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+
      # 下载插件
       - name: Download Lienol Package
         if: env.PKG_LIENOL == 'true' && env.REPO_URL != 'https://github.com/Lienol/openwrt.git'
         run: |
           cd openwrt
           echo "src-git yfdoor https://github.com/Lienol/openwrt-package" >> feeds.conf.default
+
       # 自定插件
       - name: Download My Package
         run: |
@@ -98,7 +102,7 @@ jobs:
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          
+
       # 配置文件
       - name: Config File
         run: |
@@ -108,6 +112,7 @@ jobs:
           cd openwrt
           ../script/$DIY1_FILE
           make defconfig
+
       # SSH连接
       - name: SSH Connection
         if: env.SSH_ACTION == 'true'
@@ -119,6 +124,7 @@ jobs:
           cd openwrt
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
+
       # 编译固件
       - name: Compile Firmware
         id: compile
@@ -132,6 +138,7 @@ jobs:
           df -h
           echo "======================="
           echo "::set-output name=status::success"
+
      # 更新分支
       - name: Upload Branch
         if: env.UPLOAD_BRANCH == 'true' && steps.compile.outputs.status == 'success'
@@ -147,6 +154,7 @@ jobs:
           git add .
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:OpenWrt_3rd_$CONF_FILE
+
       # 准备固件
       - name: Organize Artifact
         if: steps.compile.outputs.status == 'success'
@@ -155,6 +163,7 @@ jobs:
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
           zip -r OpenWrt_Firmware.zip targets
           echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+
       # 上传固件
       - name: Upload Artifact
         uses: actions/upload-artifact@master
