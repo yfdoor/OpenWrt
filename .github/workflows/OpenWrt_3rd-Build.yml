@@ -27,7 +27,7 @@ env:
   REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: dev-19.07
   DIY0_FILE: DIY0.sh
-  DIY1_FILE: DIY2.sh
+  DIY1_FILE: DIY1.sh
   CONF_FILE: x86_64
   PKG_LEAN: true
   PKG_LIENOL: false
@@ -73,16 +73,16 @@ jobs:
         if: env.PKG_LEAN == 'true' && env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
-          sudo rm -rf package/lean
+          sudo rm -rf package/lean package/default-settings package/diy
           mkdir -p package/lean
           svn checkout https://github.com/coolsnowwolf/lede/trunk/package/lean/ package/lean
           sudo rm -rf package/lean/.svn/
 
-          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
-          mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
+          #mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
+          #mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
 
-          sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
-          sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          #sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
+          #sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
 
      # 下载插件
       - name: Download Lienol Package
