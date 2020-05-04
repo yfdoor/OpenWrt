@@ -171,7 +171,7 @@ jobs:
         uses: actions/upload-artifact@master
         if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
         with:
-          name: OpenWrt_Firmware_${{ env.CON_FILE }}
+          name: OpenWrt_Firmware_${{ env.CONF_FILE }}
           path: ./openwrt/bin/targets/
 
       # 创建发行
@@ -183,7 +183,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
           tag_name: ${{ env.RELEASE_DATE }}_TAG
-          release_name: OpenWrt_${{ env.CON_FILE }}_${{ env.RELEASE_DATE }}
+          release_name: OpenWrt_${{ env.CONF_FILE }}_${{ env.RELEASE_DATE }}
           body: |
             1、本固件为自动编译
             2、发行版中只提供完整的固件
@@ -206,5 +206,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./openwrt/bin/OpenWrt_Firmware.zip
-          asset_name: OpenWrt_YFDOOR_${{ env.CON_FILE }}_${{ env.RELEASE_DATE }}.zip
+          asset_name: OpenWrt_YFDOOR_${{ env.CONF_FILE }}_${{ env.RELEASE_DATE }}.zip
           asset_content_type: application/zip
