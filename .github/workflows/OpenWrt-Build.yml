@@ -89,7 +89,7 @@ jobs:
         if: env.PKG_LIENOL == 'true' && env.REPO_URL != 'https://github.com/Lienol/openwrt.git'
         run: |
           cd openwrt
-          echo "src-git yfdoor1 https://github.com/Lienol/openwrt-package" >> feeds.conf.default
+          echo "src-git yfdoor9 https://github.com/Lienol/openwrt-package" >> feeds.conf.default
 
       # 自定插件
       - name: Download My Package
