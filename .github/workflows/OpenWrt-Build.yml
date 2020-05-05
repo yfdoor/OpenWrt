@@ -83,13 +83,15 @@ jobs:
 
           sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
           sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          
+          echo "src-git yfdoor0 https://github.com/fw876/helloworld" >> feeds.conf.default
 
      # 下载插件
       - name: Download Lienol Package
         if: env.PKG_LIENOL == 'true' && env.REPO_URL != 'https://github.com/Lienol/openwrt.git'
         run: |
           cd openwrt
-          echo "src-git yfdoor https://github.com/Lienol/openwrt-package" >> feeds.conf.default
+          echo "src-git yfdoor1 https://github.com/Lienol/openwrt-package" >> feeds.conf.default
 
       # 自定插件
       - name: Download My Package
