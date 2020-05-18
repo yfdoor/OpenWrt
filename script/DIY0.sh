@@ -5,5 +5,4 @@
 # Define My Package
 git clone https://github.com/yfdoor/OpenWrt-AdGuardHome.git                         package/yfdoor/adguardhome
 git clone https://github.com/rufengsuixing/luci-app-adguardhome.git                 package/yfdoor/luci-app-adguardhome
-
-echo "src-git yfdoor0 https://github.com/fw876/helloworld" >> feeds.conf.default
+git clone https://github.com/fw876/helloworld.git                                   package/yfdoor/luci-app-ssr-plus
