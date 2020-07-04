@@ -52,4 +52,3 @@
 ## 感谢：
   - [OpenWrt](https://github.com/openwrt/openwrt)
   - [Lean LEDE](https://github.com/coolsnowwolf/lede)
-  - [Lienol OpenWrt](https://github.com/Lienol/openwrt)
