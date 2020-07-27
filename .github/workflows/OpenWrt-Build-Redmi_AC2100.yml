@@ -1,7 +1,7 @@
 # This is free software, lisence use MIT.
 # Copyright (C) https://github.com/yfdoor
 
-name: OpenWrt-Build
+name: OpenWrt-Build-Redmi_AC2100
 
 # 触发条件
 on:
