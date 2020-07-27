@@ -45,7 +45,7 @@ jobs:
     steps:
       # 项目初始
       - name: Code Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@main
 
       # 空间清理
       - name: Space Cleanup
@@ -167,7 +167,7 @@ jobs:
 
       # 上传固件
       - name: Upload Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@main
         if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
         with:
           name: OpenWrt_Firmware_${{ env.CONF_FILE }}
@@ -176,7 +176,7 @@ jobs:
       # 创建发行
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@main
         if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -198,7 +198,7 @@ jobs:
 
       # 上传发行
       - name: Upload Release
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@main
         if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
