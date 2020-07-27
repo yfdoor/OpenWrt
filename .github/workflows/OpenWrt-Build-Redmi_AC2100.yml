@@ -11,9 +11,9 @@ on:
   #    paths:
   #      - '.config'
   schedule:
-     - cron: 0 0 1/3 * *
-  # watch:
-  #   types: started
+     - cron: 0 0 3/3 * *
+  watch:
+    types: started
 
 # 环境定义
 env:
@@ -28,7 +28,7 @@ env:
   REPO_BRANCH: v19.07.3
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  CONF_FILE: x86_64
+  CONF_FILE: Redmi_AC2100
   PKG_LEAN: true
   PKG_LIENOL: true
   SSH_ACTION: false
