@@ -25,7 +25,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   ## REPO_URL: https://github.com/coolsnowwolf/lede.git
   ## REPO_URL: https://github.com/Lienol/openwrt.git
-  REPO_BRANCH: master
+  REPO_BRANCH: v19.07.4
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
   CONF_FILE: x86_64
