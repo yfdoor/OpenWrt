@@ -96,14 +96,14 @@ jobs:
           chmod +x script/$DIY0_FILE
           cd openwrt
           ../script/$DIY0_FILE
-          
+
       # 更新Feed
       - name: Update Feeds
         run: |
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          
+
       # 配置文件
       - name: Config File
         run: |
