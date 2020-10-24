@@ -163,7 +163,9 @@ jobs:
           cd openwrt/bin
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
           zip -r OpenWrt_Firmware.zip targets
-          echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
+          date=$(TZ=UTC-8 date +"%Y.%m.%d")
+          echo "RELEASE_DATE=$date" >> $GITHUB_ENV
+          # echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
 
       # 上传固件
       - name: Upload Artifact
