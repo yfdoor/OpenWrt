@@ -104,8 +104,8 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           pushd feeds/packages/lang
-          rm -fr golang
-          svn co https://github.com/coolsnowwolf/packages/trunk/lang/golang
+          sudo rm -rf golang
+          svn co https://github.com/openwrt/packages/trunk/lang/golang
           popd
 
       # 配置文件
