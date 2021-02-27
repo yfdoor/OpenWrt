@@ -103,6 +103,10 @@ jobs:
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          pushd feeds/packages/lang	
+          sudo rm -rf golang	
+          svn co https://github.com/openwrt/packages/trunk/lang/golang	
+          popd
 
       # 配置文件
       - name: Config File
