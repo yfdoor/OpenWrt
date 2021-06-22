@@ -1,7 +1,7 @@
 # OpenWrt Configuration
 CONFIG_TARGET_ipq807x=y
-CONFIG_TARGET_ramips_mt7621=y
-CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_redmi-router-ac2100=y
+CONFIG_TARGET_ipq807x_generic=y
+CONFIG_TARGET_ipq807x_generic_DEVICE_xiaomi_ax3600=y
 
 # Root filesystem archives
 # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
