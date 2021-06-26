@@ -1,7 +1,7 @@
 # This is free software, lisence use MIT.
 # Copyright (C) https://github.com/yfdoor
 
-name: OpenWrt-Build-Mi_AX3600
+name: LEDE-Build-Mi_AX3600
 
 # 触发条件
 on:
@@ -22,8 +22,8 @@ env:
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
-  REPO_URL: https://github.com/openwrt/openwrt.git
-  ## REPO_URL: https://github.com/coolsnowwolf/lede.git
+  ## REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
   ## REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: master
   DIY0_FILE: DIY0.sh
