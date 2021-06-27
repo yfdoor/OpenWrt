@@ -189,7 +189,7 @@ jobs:
       # 上传固件
       - name: Upload Firmware
         uses: actions/upload-artifact@main
-        if: steps.organize.outputs.status == 'success' env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+        if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
         with:
           name: OpenWrt_Firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
