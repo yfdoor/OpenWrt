@@ -159,8 +159,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cd openwrt/bin
-          zip -r OpenWrt_Packages.zip -s 100m packages
-          zip -r OpenWrt_Targets.zip -s 100m targets
+          # zip -r OpenWrt_Packages.zip -s 100m packages
+          # zip -r OpenWrt_Targets.zip -s 100m targets
           git init
           git config user.name "yfdoor"
           git config user.email "yfdoor@github.com"
@@ -182,7 +182,8 @@ jobs:
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin
-          find ./targets/ -type d -name "packages" | xargs rm -rf {}
+          find ./ -type d -name "packages" | xargs rm -rf {}
+          rm -rf .*
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
       
