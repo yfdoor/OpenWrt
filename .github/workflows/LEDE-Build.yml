@@ -191,7 +191,7 @@ jobs:
         uses: actions/upload-artifact@main
         if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
         with:
-          name: OpenWrt_Firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          name: OpenWrt_Firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_DATE }}
           path: ${{ env.FIRMWARE }}
         
     # 上传CowTransfer
