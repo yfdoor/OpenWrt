@@ -43,7 +43,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
@@ -58,7 +58,7 @@ jobs:
         run: |
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo -E apt-get update
-          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-latest)
+          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-1804)
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           sudo timedatectl set-timezone "$TZ" 
