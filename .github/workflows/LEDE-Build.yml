@@ -12,8 +12,8 @@ on:
   #      - '.config'
   schedule:
      - cron: 0 0 2/3 * *
-  # watch:
-  #   types: started
+  watch:
+     types: started
 
 # 环境定义
 env:
@@ -26,15 +26,19 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede.git
   ## REPO_URL: https://github.com/Lienol/openwrt.git
   REPO_BRANCH: master
+  CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  CONF_FILE: x86_64
   PKG_LEAN: false
   PKG_LIENOL: true
   SSH_ACTION: false
-  UPLOAD_BRANCH: true
-  UPLOAD_RELEASE: false
+  UPLOAD_BRANCH: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
   #####################################################
 
 jobs:
@@ -47,17 +51,17 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@main
 
-      # 空间清理
-      - name: Space Cleanup
+      # 初始环境
+      - name: Initialize Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`
-          sudo rm -rf /swapfile /etc/apt/sources.list.d /usr/share/dotnet /usr/local/lib/android /opt/ghc /etc/mysql /etc/php
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo -E apt-get update
-          sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf
+          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu)
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
+          sudo timedatectl set-timezone "$TZ" 
           echo "======================="
           df -h
           echo "======================="
@@ -107,6 +111,7 @@ jobs:
       # 配置文件
       - name: Config File
         run: |
+          chmod +x script/$DIY1_FILE
           [ -e files ] && cp -r -f files openwrt/files
           [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
           chmod +x script/$DIY1_FILE
@@ -116,8 +121,11 @@ jobs:
 
       # SSH连接
       - name: SSH Connection
-        if: env.SSH_ACTION == 'true'
-        uses: yfdoor/debugger-action@master
+        uses: P3TERX/ssh2actions@v1.0.0
+        if: (env.SSH_ACTION == 'true' && github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
       # 下载依赖
       - name: Make Download
@@ -132,13 +140,17 @@ jobs:
         run: |
           cd openwrt
           echo -e "$(nproc) thread compile"
-          make -j$(nproc) || make -j1 V=s
+          make -j$(nproc) || make -j1 || make -j1 V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
           df -h
           echo "======================="
           echo "::set-output name=status::success"
+          
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "RELEASE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
      # 更新分支
       - name: Upload Branch
@@ -155,57 +167,81 @@ jobs:
           git add .
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:LEDE_$CONF_FILE
-
+       
+      # 上传 Bin
+      - name: Upload Bin Directory
+        uses: actions/upload-artifact@main
+        if: env.UPLOAD_BIN_DIR == 'true' && steps.compile.outputs.status == 'success'
+        with:
+          name: OpenWrt_Bin${{ env.DEVICE_NAME }}${{ env.RELEASE_DATE }}
+          path: ./openwrt/bin
+          
       # 准备固件
-      - name: Organize Artifact
-        if: steps.compile.outputs.status == 'success'
+      - name: Organize Firmware
+        id: organize
+        if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin
           find ./targets/ -type d -name "packages" | xargs rm -rf {}
-          zip -r OpenWrt_Firmware.zip targets
-          date=$(TZ=UTC-8 date +"%Y.%m.%d")
-          echo "RELEASE_DATE=$date" >> $GITHUB_ENV
-          # echo ::set-env name=RELEASE_DATE::"$(TZ=UTC-8 date +"%Y.%m.%d")"
-
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+      
       # 上传固件
-      - name: Upload Artifact
+      - name: Upload Firmware
         uses: actions/upload-artifact@main
-        if: env.UPLOAD_FIRMWARE == 'true' && steps.compile.outputs.status == 'success'
+        if: steps.organize.outputs.status == 'success' env.UPLOAD_FIRMWARE == 'true' && !cancelled()
         with:
-          name: OpenWrt_Firmware_${{ env.CONF_FILE }}
-          path: ./openwrt/bin/targets/
-
-      # 创建发行
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@main
-        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
+          name: OpenWrt_Firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          path: ${{ env.FIRMWARE }}
+        
+    # 上传CowTransfer
+      - name: Upload to Cowtransfer
+        id: cowtransfer
+        if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+        run: |
+          curl -fsSL git.io/file-transfer | sh
+          ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+          echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+          echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+        
+      # 上传WeTransfer
+      - name: Upload to WeTransfer
+        id: wetransfer
+        if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+        run: |
+          curl -fsSL git.io/file-transfer | sh
+          ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+          echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+          echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+      
+      # 生成发行
+      - name: Generate Release
+        id: tag
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
+        run: |
+          echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+          touch release.txt
+          [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+          [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+          echo "::set-output name=status::success"
+          
+      # 上传发行
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          tag_name: ${{ env.RELEASE_DATE }}_TAG
-          release_name: OpenWrt_${{ env.CONF_FILE }}_${{ env.RELEASE_DATE }}
+          tag_name: ${{ steps.tag.outputs.release_tag }}
           body: |
             1、本固件为自动编译
             2、发行版中只提供完整的固件
-            3、需要单独IPK请到分支下载
+            3、需要单独IPK请到 Action 下载
             4、源码：${{ env.REPO_URL }}
             5、分支：${{ env.REPO_BRANCH }}
             6、Lean's package option：${{ env.PKG_LEAN }}
             7、Lienol's package option：${{ env.PKG_LIENOL }}
             -- Build by YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
             -- Automated build | 自动编译
-          draft: false
-          prerelease: false
-
-      # 上传发行
-      - name: Upload Release
-        uses: actions/upload-release-asset@main
-        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success'
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./openwrt/bin/OpenWrt_Firmware.zip
-          asset_name: OpenWrt_YFDOOR_${{ env.CONF_FILE }}_${{ env.RELEASE_DATE }}.zip
-          asset_content_type: application/zip
+          body_path: release.txt
+          files: ${{ env.FIRMWARE }}/*
