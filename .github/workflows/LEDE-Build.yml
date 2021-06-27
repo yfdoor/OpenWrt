@@ -167,7 +167,7 @@ jobs:
           git add .
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:LEDE_$CONF_FILE
-       
+          
       # 上传 Bin
       - name: Upload Bin Directory
         uses: actions/upload-artifact@main
@@ -182,8 +182,10 @@ jobs:
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
           cd openwrt/bin
+          ls -l -a
+          rm -rf .git
           find ./ -type d -name "packages" | xargs rm -rf {}
-          rm -rf .*
+          ls -l -a
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
       
