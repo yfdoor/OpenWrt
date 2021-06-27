@@ -32,7 +32,7 @@ env:
   PKG_LEAN: false
   PKG_LIENOL: true
   SSH_ACTION: false
-  UPLOAD_BRANCH: false
+  UPLOAD_BRANCH: true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
