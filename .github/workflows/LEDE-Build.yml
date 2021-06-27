@@ -186,6 +186,9 @@ jobs:
           rm -rf .git
           find ./ -type d -name "packages" | xargs rm -rf {}
           ls -l -a
+          pwd
+          cd target
+          ls -l -a
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
       
@@ -227,6 +230,9 @@ jobs:
           [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
           [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
           echo "::set-output name=status::success"
+          pwd
+          cat release.txt
+          
           
       # 上传发行
       - name: Upload Release
@@ -248,3 +254,9 @@ jobs:
             -- Automated build | 自动编译
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
+          
+          run: |
+            pwd
+            ls -l -a
+            cat release.txt
+            echo ${{ env.FIRMWARE }}
