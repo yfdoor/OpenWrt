@@ -187,7 +187,7 @@ jobs:
           find ./ -type d -name "packages" | xargs rm -rf {}
           ls -l -a
           pwd
-          cd target
+          cd targets
           ls -l -a
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
