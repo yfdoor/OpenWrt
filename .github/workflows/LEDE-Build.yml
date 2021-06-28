@@ -1,5 +1,8 @@
 # This is free software, lisence use MIT.
 # Copyright (C) https://github.com/yfdoor
+#
+# https://github.com/yfdoor/OpenWrt
+# Description: GitHub Actions for OpenWrt Build
 
 name: LEDE-Build
 
@@ -29,7 +32,7 @@ env:
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  PKG_LEAN: false
+  PKG_LEAN: true
   PKG_LIENOL: true
   SSH_ACTION: false
   UPLOAD_BRANCH: true
@@ -62,10 +65,17 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           sudo timedatectl set-timezone "$TZ" 
-          echo "======================="
-          df -h
-          echo "======================="
-
+          
+          echo "[Space Usage]:"
+          echo "========================================"
+          df -hT
+          echo "========================================"
+          echo "[File List]:" 
+          echo "========================================"
+          echo "Current Path:" $PWD
+          ls -l -A
+          echo "========================================"
+          
      # 下载源码
       - name: Clone Code
         run: |
@@ -114,7 +124,6 @@ jobs:
           chmod +x script/$DIY1_FILE
           [ -e files ] && cp -r -f files openwrt/files
           [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
-          chmod +x script/$DIY1_FILE
           cd openwrt
           ../script/$DIY1_FILE
           make defconfig
@@ -141,16 +150,22 @@ jobs:
           cd openwrt
           echo -e "$(nproc) thread compile"
           make -j$(nproc) || make -j1 || make -j1 V=s
-          echo "======================="
-          echo "Space usage:"
-          echo "======================="
-          df -h
-          echo "======================="
-          echo "::set-output name=status::success"
+          
+          echo "[Space Usage]:"
+          echo "========================================"
+          df -hT
+          echo "========================================"
+          echo "[File List]:" 
+          echo "========================================"
+          echo "Current Path:" $PWD
+          ls -l -A
+          echo "========================================"
           
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-          echo "RELEASE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "RELEASE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+          
+          echo "::set-output name=status::success"          
 
      # 更新分支
       - name: Upload Branch
@@ -174,8 +189,8 @@ jobs:
         uses: actions/upload-artifact@main
         if: env.UPLOAD_BIN_DIR == 'true' && steps.compile.outputs.status == 'success'
         with:
-          name: OpenWrt_Bin${{ env.DEVICE_NAME }}${{ env.RELEASE_DATE }}
-          path: ./openwrt/bin
+          name: OpenWrt_Bin_${{ env.DEVICE_NAME }}_${{ env.RELEASE_DATE }}
+          path: openwrt/bin
           
       # 准备固件
       - name: Organize Firmware
@@ -185,17 +200,26 @@ jobs:
           #find ./ -type d -name "packages" | xargs rm -rf {}
           cd openwrt/bin/targets/*/*
           rm -rf packages
-          ls -l -a -R
+          
+          echo "[Space Usage]:"
+          echo "========================================"
+          df -hT
+          echo "========================================"
+          echo "[File List]:" 
+          echo "========================================"
+          echo "Current Path:" $PWD
+          ls -l -A
+          echo "========================================"
+          
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
-          echo ${{ env.FIRMWARE }}
 
       # 上传固件
       - name: Upload Firmware
         uses: actions/upload-artifact@main
         if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
         with:
-          name: OpenWrt_Firmware${{ env.DEVICE_NAME }}${{ env.RELEASE_DATE }}
+          name: OpenWrt_Firmware_${{ env.DEVICE_NAME }}_${{ env.RELEASE_DATE }}
           path: ${{ env.FIRMWARE }}
         
     # 上传CowTransfer
@@ -225,12 +249,21 @@ jobs:
         run: |
           echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
           touch release.txt
-          [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-          [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-          echo "::set-output name=status::success"
-          pwd
-          cat release.txt
+          cat >> release.txt << EOF
+          1、本固件为 Github Actions 自动编译
+          2、发行版中只提供完整固件，需要单独IPK请到 "OpenWrt_Bin Artifacts" 或对应分支下载
+          4、源码：${{ env.REPO_URL }}
+          5、分支：${{ env.REPO_BRANCH }}
+          6、Lean's package option：${{ env.PKG_LEAN }}
+          7、Lienol's package option：${{ env.PKG_LIENOL }}
+          -- Build by YFDOOR @ with Github Actions on ${{ env.RELEASE_DATE }} for ${{ env.DEVICE_NAME }} device
           
+          外链下载：
+          EOF
+          [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer Download (24hrs)](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+          [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer Download (7days)](${{ steps.wetransfer.outputs.url }})" >> release.txt
+          
+          echo "::set-output name=status::success"          
           
       # 上传发行
       - name: Upload Release
@@ -240,16 +273,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
-          #body: |
-          #  1、本固件为自动编译
-          #  2、发行版中只提供完整的固件
-          #  3、需要单独IPK请到 Action 下载
-          #  4、源码：${{ env.REPO_URL }}
-          #  5、分支：${{ env.REPO_BRANCH }}
-          #  6、Lean's package option：${{ env.PKG_LEAN }}
-          #  7、Lienol's package option：${{ env.PKG_LIENOL }}
-          #  -- Build by YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
-          #  -- Automated build | 自动编译
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
-       
