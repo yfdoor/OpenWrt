@@ -167,7 +167,8 @@ jobs:
           git add .
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:LEDE_$CONF_FILE
-          
+          rm -rf .git
+
       # 上传 Bin
       - name: Upload Bin Directory
         uses: actions/upload-artifact@main
@@ -181,19 +182,14 @@ jobs:
         id: organize
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
-          cd openwrt/bin
-          ls -l -a
-          rm -rf .git
-          find ./ -type d -name "packages" | xargs rm -rf {}
-          ls -l -a
-          pwd
-          cd targets
-          ls -l -a
-          cd ..
-          ls -l -a
+          #find ./ -type d -name "packages" | xargs rm -rf {}
+          cd openwrt/bin/targets/*/*
+          rm -rf packages
+          ls -l -a -R
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
-      
+          echo ${{ env.FIRMWARE }}
+
       # 上传固件
       - name: Upload Firmware
         uses: actions/upload-artifact@main
@@ -244,21 +240,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
-          body: |
-            1、本固件为自动编译
-            2、发行版中只提供完整的固件
-            3、需要单独IPK请到 Action 下载
-            4、源码：${{ env.REPO_URL }}
-            5、分支：${{ env.REPO_BRANCH }}
-            6、Lean's package option：${{ env.PKG_LEAN }}
-            7、Lienol's package option：${{ env.PKG_LIENOL }}
-            -- Build by YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
-            -- Automated build | 自动编译
+          #body: |
+          #  1、本固件为自动编译
+          #  2、发行版中只提供完整的固件
+          #  3、需要单独IPK请到 Action 下载
+          #  4、源码：${{ env.REPO_URL }}
+          #  5、分支：${{ env.REPO_BRANCH }}
+          #  6、Lean's package option：${{ env.PKG_LEAN }}
+          #  7、Lienol's package option：${{ env.PKG_LIENOL }}
+          #  -- Build by YFDOOR @ with Github Action on ${{ env.RELEASE_DATE }}
+          #  -- Automated build | 自动编译
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
-          
-          run: |
-            pwd
-            ls -l -a
-            cat release.txt
-            echo ${{ env.FIRMWARE }}
+       
