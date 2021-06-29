@@ -60,7 +60,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo timedatectl set-timezone "$TZ" 
-          hh=$date
+
+          export hh="$date"
           echo "RELEASE=$(hh +"%Y%m%d%H%M")" >> $GITHUB_ENV
           echo "TAG=$(hh +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
           echo ${{ env.RELEASE }}
