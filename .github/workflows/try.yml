@@ -61,7 +61,7 @@ jobs:
         run: |
           sudo timedatectl set-timezone "$TZ" 
 
-          export hh=$date
+          export hh=$(date)
           echo $hh
           echo "RELEASE=$(hh +"%Y%m%d%H%M")" >> $GITHUB_ENV
           echo "TAG=$(hh +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
