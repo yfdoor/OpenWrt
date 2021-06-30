@@ -90,7 +90,7 @@ jobs:
           
      # Lean's Package 适配
       - name: Lean Package Delete
-        if: env.REPO_URL = 'https://github.com/coolsnowwolf/lede.git'
+        if: env.REPO_URL == 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
           sudo rm -rf package/yfdoorg/lean
