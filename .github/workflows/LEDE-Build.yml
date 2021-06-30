@@ -86,7 +86,7 @@ jobs:
           chmod +x script/$DIY0_FILE
           cd openwrt
           ../script/$DIY0_FILE
-          ls -l  /package/yfdoorg
+          ls -l package/yfdoorg
           
      # Lean's Package 适配
       - name: Lean Package Delete
@@ -94,7 +94,7 @@ jobs:
         run: |
           cd openwrt
           sudo rm -rf package/yfdoorg/lean
-          ls -l  /package/yfdoorg
+          ls -l package/yfdoorg
           
      # Lean's Package 适配
       - name: Lean Package Fix
