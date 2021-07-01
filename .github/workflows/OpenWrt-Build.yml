@@ -92,7 +92,7 @@ jobs:
         if: env.REPO_URL == 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
-          sudo rm -rf package/lean
+          rm -rf package/lean
           
      # Lean's Package 适配
       - name: Lean Package Fix
