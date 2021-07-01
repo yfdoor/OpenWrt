@@ -79,6 +79,7 @@ jobs:
       - name: Clone Code
         run: |
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+          
       # 自定插件
       - name: Download My Package
         run: |
@@ -119,6 +120,7 @@ jobs:
           cd openwrt
           ../script/$DIY1_FILE
           make defconfig
+          
       # SSH连接
       - name: SSH Connection
         uses: P3TERX/ssh2actions@v1.0.0
@@ -133,6 +135,7 @@ jobs:
           cd openwrt
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
+          
       # 编译固件
       - name: Compile Firmware
         id: compile
@@ -157,6 +160,7 @@ jobs:
           echo "RELEASE_DATE=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
           
           echo "::set-output name=status::success"          
+          
      # 更新分支
       - name: Upload Branch
         if: env.UPLOAD_BRANCH == 'true' && steps.compile.outputs.status == 'success'
@@ -173,6 +177,7 @@ jobs:
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:LEDE_$CONF_FILE
           rm -rf .git
+          
       # 上传 Bin
       - name: Upload Bin Directory
         uses: actions/upload-artifact@main
@@ -203,6 +208,7 @@ jobs:
           
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
+          
       # 上传固件
       - name: Upload Firmware
         uses: actions/upload-artifact@main
