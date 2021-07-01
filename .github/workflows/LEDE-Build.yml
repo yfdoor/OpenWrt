@@ -86,15 +86,13 @@ jobs:
           chmod +x script/$DIY0_FILE
           cd openwrt
           ../script/$DIY0_FILE
-          ls -l package/yfdoorg
           
      # Lean's Package 适配
       - name: Lean Package Delete
         if: env.REPO_URL == 'https://github.com/coolsnowwolf/lede.git'
         run: |
           cd openwrt
-          sudo rm -rf package/yfdoorg/lean
-          ls -l package/yfdoorg
+          rm -rf package/lean
           
      # Lean's Package 适配
       - name: Lean Package Fix
@@ -250,7 +248,7 @@ jobs:
           1、源码：${{ env.REPO_URL }}
           2、分支：${{ env.REPO_BRANCH }}
           3、设备：${{ env.DEVICE_NAME }}
-          -- Build by YFDOOR @ with Github Actions on ${{ env.RELEASE_DATE }} for ${{ env.DEVICE_NAME }} device
+          -- Build by YFDOOR with Github Actions on ${{ env.RELEASE_DATE }} for ${{ env.DEVICE_NAME }} device
           
           外链下载：
           EOF
@@ -269,3 +267,13 @@ jobs:
           tag_name: ${{ env.RELEASE_DATE }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
+     
+     # 清理发行
+      - name: Remove Old Release
+        uses: dev-drprasad/delete-older-releases@v0.1.0
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        with:
+          keep_latest: 10
+          delete_tags: true
