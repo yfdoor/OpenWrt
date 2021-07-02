@@ -27,7 +27,7 @@ env:
   #####################################################
   REPO_URL: https://github.com/openwrt/openwrt.git
   #REPO_URL: https://github.com/coolsnowwolf/lede.git
-  REPO_BRANCH: v21.02.0-rc3
+  REPO_BRANCH: v19.07.7
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
@@ -111,6 +111,10 @@ jobs:
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          pushd feeds/packages/lang	
+          sudo rm -rf golang	
+          svn co https://github.com/openwrt/packages/trunk/lang/golang	
+          popd
           
       # 配置文件
       - name: Config File
