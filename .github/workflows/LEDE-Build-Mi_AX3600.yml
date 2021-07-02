@@ -99,11 +99,10 @@ jobs:
         if: env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git' && env.PKG_LEAN == 'true'
         run: |
           cd openwrt          
-          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
+          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile          
           mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
-          
-          sed  -i '/tools-$(CONFIG_TARGET_orion_generic)/atools-y += ucl upx' tools/Makefile
-          sed  -i '/dependencies/a\\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+          sed -i '23a\tools-y += ucl upx' tools/Makefile
+          sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
           
       # 更新Feed
       - name: Update Feeds
@@ -111,6 +110,10 @@ jobs:
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          pushd feeds/packages/lang	
+          sudo rm -rf golang	
+          svn co https://github.com/openwrt/packages/trunk/lang/golang	
+          popd
           
       # 配置文件
       - name: Config File
