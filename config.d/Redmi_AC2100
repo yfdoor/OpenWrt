@@ -5,7 +5,7 @@ CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_redmi-router-ac2100=y
 
 # Root filesystem archives
 # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
-CONFIG_TARGET_ROOTFS_TARGZ=y
+# CONFIG_TARGET_ROOTFS_TARGZ=y
 
 # Root filesystem images
 # CONFIG_TARGET_ROOTFS_EXT4FS is not set
