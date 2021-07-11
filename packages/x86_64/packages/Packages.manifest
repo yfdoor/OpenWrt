@@ -1,0 +1,269 @@
+Package: cgi-io
+Version: 19
+Depends: libc, libubox20191228, libubus20191227
+Source: feeds/packages/net/cgi-io
+SourceName: cgi-io
+License: GPL-2.0-or-later
+Section: net
+Maintainer: John Crispin <blogic@openwrt.org>
+Architecture: x86_64
+Installed-Size: 8672
+Filename: cgi-io_19_x86_64.ipk
+Size: 9435
+SHA256sum: 1921277f68058a0a4663df192ac6472465b2c7d8efee24fe710a41b740c6caf1
+Description:  This package contains an cgi utility that is useful for up/downloading files
+
+Package: coreutils-base64
+Version: 8.30-2
+Depends: libc, coreutils
+Alternatives: 300:/bin/base64:/usr/bin/gnu-base64
+Source: feeds/packages/utils/coreutils
+SourceName: coreutils-base64
+Section: utils
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Architecture: x86_64
+Installed-Size: 23465
+Filename: coreutils-base64_8.30-2_x86_64.ipk
+Size: 24192
+SHA256sum: 2cc3023542aff3531ae9e78a153e05c65ab5c96ff1ec792f9366d9480efd682d
+Description:  Full version of standard GNU base64 utility.
+
+Package: coreutils
+Version: 8.30-2
+Depends: libc
+Source: feeds/packages/utils/coreutils
+SourceName: coreutils
+Section: utils
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Architecture: x86_64
+Installed-Size: 104
+Filename: coreutils_8.30-2_x86_64.ipk
+Size: 919
+SHA256sum: 5ecc9b5ecfbad240a355d06c189003410e36542210954258c735a27094a91ca0
+Description:  Full versions of standard GNU utilities. If an equivalent Busybox applet is
+ available, you should consider compiling that instead as Busybox applets are
+ usually smaller, at the expense of reduced functionality.
+
+Package: ddns-scripts
+Version: 2.7.8-13
+Source: feeds/packages/net/ddns-scripts
+SourceName: ddns-scripts
+License: GPL-2.0
+Section: net
+Architecture: all
+Installed-Size: 15007
+Filename: ddns-scripts_2.7.8-13_all.ipk
+Size: 16075
+SHA256sum: 3ca0193c9280b80471d635285b3aafe619614114b83b11e7d54e846ea1bcfe08
+Description:  Dynamic DNS Client scripts (with IPv6 support) - Info: https://openwrt.org/docs/guide-user/services/ddns/client
+
+Package: etherwake
+Version: 1.09-4
+Depends: libc
+Source: feeds/packages/net/etherwake
+SourceName: etherwake
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: x86_64
+Installed-Size: 4962
+Filename: etherwake_1.09-4_x86_64.ipk
+Size: 5847
+SHA256sum: 0a7e73e5c8cb9508be6fd78fed7deb7a4f62f64dafa507e7a5c162a6633af001
+Description:  You can wake up WOL compliant Computers which have been powered down to
+ sleep mode or start WOL compliant Computers with a BIOS feature.
+ WOL is an abbreviation for Wake-on-LAN. It is a standard that allows you
+ to turn on a computer from another location over a network connection.
+ ether-wake also supports WOL passwords.
+
+Package: libcap
+Version: 2.27-1
+Depends: libc
+Source: feeds/packages/libs/libcap
+SourceName: libcap
+License: GPL-2.0
+LicenseFiles: License
+Section: libs
+Maintainer: Paul Wassi <p.wassi@gmx.at>
+Architecture: x86_64
+Installed-Size: 6795
+Filename: libcap_2.27-1_x86_64.ipk
+Size: 7544
+SHA256sum: eb8bbe5270809d8c3c6f03421b7fc431cba39472278f26ae9c231927ffaf68cb
+Description:  Linux capabilities library
+
+Package: libcares
+Version: 1.15.0-4
+Depends: libc
+Source: feeds/packages/libs/c-ares
+SourceName: libcares
+License: MIT
+Section: libs
+Maintainer: Karl Palsson <karlp@etactica.com>
+Architecture: x86_64
+Installed-Size: 31537
+Filename: libcares_1.15.0-4_x86_64.ipk
+Size: 32386
+SHA256sum: 152a44f3eb32e705cdb0b6104d85144c59357de68812d3c3892aa076de545f1d
+Description:  c-ares is a C library for asynchronous DNS requests (including name resolves)
+ 
+ C89 compatibility, MIT licensed, builds for and runs on POSIX, Windows,
+ Netware, Android and many more operating systems.
+ 
+
+Package: libev
+Version: 4.25-1
+Depends: libc
+Source: feeds/packages/libs/libev
+SourceName: libev
+License: BSD-2-Clause
+Section: libs
+Maintainer: Karl Palsson <karlp@tweak.net.au>
+Architecture: x86_64
+Installed-Size: 20674
+Filename: libev_4.25-1_x86_64.ipk
+Size: 21475
+SHA256sum: 9876dcaf504e6593b7593681c984c57079e490a4ac3f5e9a2dfa27289009b7db
+Description:  A full-featured and high-performance event loop that is loosely modelled after
+ libevent, but without its limitations and bugs.
+
+Package: libpcre
+Version: 8.43-1
+Depends: libc
+Source: feeds/packages/libs/pcre
+SourceName: libpcre
+License: BSD-3-Clause
+LicenseFiles: LICENCE
+Section: libs
+Maintainer: Thomas Heil <heil@terminal-consulting.de>
+Architecture: x86_64
+Installed-Size: 81806
+Filename: libpcre_8.43-1_x86_64.ipk
+Size: 82614
+SHA256sum: dbcf9788a5a3b4703aa7f1b6f7cfecb73c3fafa64d30e5c4368ece394e86bfa7
+Description:  A Perl Compatible Regular Expression library
+
+Package: libsodium
+Version: 1.0.18-1
+Depends: libc
+Source: feeds/packages/libs/libsodium
+SourceName: libsodium
+License: ISC
+LicenseFiles: LICENSE
+Section: libs
+Maintainer: Damiano Renfer <damiano.renfer@gmail.com>
+Architecture: x86_64
+Installed-Size: 143685
+Filename: libsodium_1.0.18-1_x86_64.ipk
+Size: 144952
+SHA256sum: 909bd0d88192d9c4a1d037c2b050162e9b80bdb96756cb5833f7affcd07c36a0
+Description:  NaCl (pronounced "salt") is a new easy-to-use high-speed software library for network communication, encryption, decryption, signatures, etc.
+ NaCl's goal is to provide all of the core operations needed to build higher-level cryptographic tools.
+ Sodium is a portable, cross-compilable, installable, packageable fork of NaCl (based on the latest released upstream version nacl-20110221), with a compatible API.
+ The design choices, particularly in regard to the Curve25519 Diffie-Hellman function, emphasize security (whereas NIST curves emphasize "performance" at the cost of security), and "magic constants" in NaCl/Sodium have clear rationales.
+ The same cannot be said of NIST curves, where the specific origins of certain constants are not described by the standards.
+ And despite the emphasis on higher security, primitives are faster across-the-board than most implementations of the NIST standards.
+
+Package: libudns
+Version: 0.4-1
+Depends: libc
+Source: feeds/packages/libs/udns
+SourceName: libudns
+License: LGPL-2.1
+Section: libs
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Architecture: x86_64
+Installed-Size: 19039
+Filename: libudns_0.4-1_x86_64.ipk
+Size: 19815
+SHA256sum: 6eafa93ac44da2521c299f3c3306e86975ac6bf0ec62f61b84e89626f034e0fd
+Description:  UDNS is a stub DNS resolver library with ability to perform both syncronous
+ and asyncronous DNS queries.
+
+Package: shadowsocks-libev-config
+Version: 3.2.5-5
+Depends: libc
+Source: feeds/packages/net/shadowsocks-libev
+SourceName: shadowsocks-libev-config
+License: GPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Architecture: x86_64
+Installed-Size: 2641
+Filename: shadowsocks-libev-config_3.2.5-5_x86_64.ipk
+Size: 3392
+SHA256sum: 8e02597c975dc93cb6c56b64e3be5f725fa308266f657f692d8b281436a475b8
+Description:  shadowsocks-libev config scripts
+
+Package: shadowsocks-libev-ss-local
+Version: 3.2.5-5
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config, libpcre
+Source: feeds/packages/net/shadowsocks-libev
+SourceName: shadowsocks-libev-ss-local
+License: GPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Architecture: x86_64
+Installed-Size: 50084
+Filename: shadowsocks-libev-ss-local_3.2.5-5_x86_64.ipk
+Size: 50922
+SHA256sum: 6f39abe4aa29d8b60bff8ca6e2c316d6172a1c6f67c23dc9fc95cb338ba5f851
+Description:  shadowsocks-libev ss-local
+
+Package: shadowsocks-libev-ss-redir
+Version: 3.2.5-5
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config
+Source: feeds/packages/net/shadowsocks-libev
+SourceName: shadowsocks-libev-ss-redir
+License: GPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Architecture: x86_64
+Installed-Size: 43074
+Filename: shadowsocks-libev-ss-redir_3.2.5-5_x86_64.ipk
+Size: 43961
+SHA256sum: 462203fe23de8ec20550ec493717677ddcc9f9b193622f7556a30b334c9fca54
+Description:  shadowsocks-libev ss-redir
+
+Package: shadowsocks-libev-ss-server
+Version: 3.2.5-5
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config, libcares, libpcre
+Source: feeds/packages/net/shadowsocks-libev
+SourceName: shadowsocks-libev-ss-server
+License: GPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Architecture: x86_64
+Installed-Size: 55294
+Filename: shadowsocks-libev-ss-server_3.2.5-5_x86_64.ipk
+Size: 56134
+SHA256sum: 3cbbb06347d1f68b0991915c93f743362a93b34dfc7106419bff4b56dd3e3e4f
+Description:  shadowsocks-libev ss-server
+
+Package: wget
+Version: 1.20.3-4
+Depends: libc, libpcre, zlib, libopenssl1.1, librt
+Provides: gnu-wget, wget-ssl
+Alternatives: 300:/usr/bin/wget:/usr/bin/wget-ssl
+Source: feeds/packages/net/wget
+SourceName: wget
+License: GPL-3.0-or-later
+LicenseFiles: COPYING
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: x86_64
+Installed-Size: 213967
+Filename: wget_1.20.3-4_x86_64.ipk
+Size: 215080
+SHA256sum: d28deade150db7e1a076fbd68a37b7f03fc28666a89a96c89345e77e9bdc54bb
+Description:  Wget is a network utility to retrieve files from the Web using http
+ and ftp, the two most widely used Internet protocols. It works
+ non-interactively, so it will work in the background, after having
+ logged off. The program supports recursive retrieval of web-authoring
+ pages as well as ftp sites -- you can use wget to make mirrors of
+ archives and home pages or to travel the Web like a WWW robot.
+ This package is built with SSL support.
+
