@@ -1,0 +1,638 @@
+Package: antfs-mount
+Version: 1
+Depends: libc, kmod-fs-antfs
+Section: utils
+Architecture: all
+Installed-Size: 185
+Filename: antfs-mount_1_all.ipk
+Size: 882
+SHA256sum: 55711eac32cdce407ae16a3d77545ba389099e94e0ca121becb37a680619ad53
+Description:  NTFS mount script for AVM NTFS driver
+
+Package: bc
+Version: 1.06.95-1
+Depends: libc, libreadline8, libncurses6
+License: GPL-2.0
+Section: utils
+Architecture: x86_64
+Installed-Size: 35756
+Filename: bc_1.06.95-1_x86_64.ipk
+Size: 36660
+SHA256sum: e4b1d80630463cee52b15d68d7be4f2c76a9bbcb0774d6e5cf952a85173c1c90
+Description:  bc is a language that supports arbitrary precision numbers with
+ interactive execution of statements.
+
+Package: coremark
+Version: 2021-03-12-1541482b-2
+Depends: libc
+License: Apache-2.0
+Section: utils
+Architecture: x86_64
+Installed-Size: 10421
+Filename: coremark_2021-03-12-1541482b-2_x86_64.ipk
+Size: 11251
+SHA256sum: e8d2e6f0bfaedd95736d77aefb34d39dc6ae61e3d2b8ea9cf43edf02ec98b5fe
+Description:  Embedded Microprocessor Benchmark
+
+Package: coreutils-base64
+Version: 8.32-6
+Depends: libc, coreutils
+Alternatives: 300:/bin/base64:/usr/libexec/base64-coreutils
+License: GPL-3.0-or-later
+Section: utils
+CPE-ID: cpe:/a:gnu:coreutils
+Architecture: x86_64
+Installed-Size: 23289
+Filename: coreutils-base64_8.32-6_x86_64.ipk
+Size: 24085
+SHA256sum: 94438cfe87fadcbff9473db2cafd29a045dcc78ed192883d8382e784aa5be90e
+Description:  Full version of standard GNU base64 utility.
+
+Package: coreutils
+Version: 8.32-6
+Depends: libc
+License: GPL-3.0-or-later
+Section: utils
+CPE-ID: cpe:/a:gnu:coreutils
+Architecture: x86_64
+Installed-Size: 105
+Filename: coreutils_8.32-6_x86_64.ipk
+Size: 992
+SHA256sum: a30c67b13b58f482aea072ad86b063d1fc28cd553dcd513f940455aa37657448
+Description:  Full versions of standard GNU utilities. If an equivalent Busybox applet is
+ available, you should consider compiling that instead as Busybox applets are
+ usually smaller, at the expense of reduced functionality.
+
+Package: curl
+Version: 7.77.0-1
+Depends: libc, libcurl4
+License: MIT
+Section: net
+CPE-ID: cpe:/a:haxx:libcurl
+Architecture: x86_64
+Installed-Size: 55748
+Filename: curl_7.77.0-1_x86_64.ipk
+Size: 56540
+SHA256sum: b6a6595c53122118ef192ad37e88d929b4248483ab191ff3733a99a13e397b9e
+Description:  A client-side URL transfer utility
+
+Package: ddns-scripts
+Version: 2.7.8-3
+License: GPL-2.0
+Section: net
+Architecture: all
+Installed-Size: 14583
+Filename: ddns-scripts_2.7.8-3_all.ipk
+Size: 15661
+SHA256sum: 1215ef6986c4d6183177adbee10be8be7e0bd3a60c8588c6f77de31b9699be4f
+Description:  Dynamic DNS Client scripts (with IPv6 support) - Info: http://wiki.openwrt.org/doc/howto/ddns.client
+
+Package: etherwake
+Version: 1.09-5
+Depends: libc
+Section: net
+Architecture: x86_64
+Installed-Size: 5077
+Filename: etherwake_1.09-5_x86_64.ipk
+Size: 5985
+SHA256sum: b57a73b5bb0397ea4aa2d705c7421cf1fc86b6b6af998304d6a4a83b6664783b
+Description:  You can wake up WOL compliant Computers which have been powered down to
+ sleep mode or start WOL compliant Computers with a BIOS feature.
+ WOL is an abbreviation for Wake-on-LAN. It is a standard that allows you
+ to turn on a computer from another location over a network connection.
+ ether-wake also supports WOL passwords.
+
+Package: htop
+Version: 3.0.5-1
+Depends: libc, libncurses6
+License: GPL-2.0-or-later
+Section: admin
+CPE-ID: cpe:/a:htop:htop
+Architecture: x86_64
+Installed-Size: 85745
+Filename: htop_3.0.5-1_x86_64.ipk
+Size: 86730
+SHA256sum: 417677545418b5fa31e7a72b621c85c986dede1349147e321bf7b69019320727
+Description:  Htop is an ncursed-based process viewer similar to top, but
+ it allows to scroll the list vertically and horizontally to
+ see all processes and their full command lines.
+
+Package: libcares
+Version: 1.17.1-1
+Depends: libc
+License: MIT
+Section: libs
+CPE-ID: cpe:/a:c-ares_project:c-ares
+Architecture: x86_64
+Installed-Size: 35423
+Filename: libcares_1.17.1-1_x86_64.ipk
+Size: 36364
+SHA256sum: ccb9a4f9e212be3e2fbea193f5bdcdac24a2cfae06e5d93c94699a5944da0490
+Description:  c-ares is a C library for asynchronous DNS requests (including name resolves)
+ 
+ C89 compatibility, MIT licensed, builds for and runs on POSIX, Windows,
+ Netware, Android and many more operating systems.
+ 
+
+Package: libcurl4
+Version: 7.77.0-1
+Depends: libc, libopenssl1.1, ca-bundle
+Provides: libcurl
+License: MIT
+Section: libs
+ABIVersion: 4
+CPE-ID: cpe:/a:haxx:libcurl
+Architecture: x86_64
+Installed-Size: 158666
+Filename: libcurl4_7.77.0-1_x86_64.ipk
+Size: 159471
+SHA256sum: a4834445d4a17415728a79dd49b8c06fa3b2aa0df14e37f575214c18939f50fb
+Description:  A client-side URL transfer library
+
+Package: libev
+Version: 4.31-1
+Depends: libc
+License: BSD-2-Clause
+Section: libs
+Architecture: x86_64
+Installed-Size: 24832
+Filename: libev_4.31-1_x86_64.ipk
+Size: 25559
+SHA256sum: 7936d371ff7b34851cf1c54b20c7503d62100699a567236ff3bd4d2c0afe3378
+Description:  A full-featured and high-performance event loop that is loosely modelled after
+ libevent, but without its limitations and bugs.
+
+Package: libminiupnpc
+Version: 2.2.2-1
+Depends: libc
+License: BSD-3-Clause
+Section: libs
+CPE-ID: cpe:/a:miniupnp_project:miniupnp
+Architecture: x86_64
+Installed-Size: 22004
+Filename: libminiupnpc_2.2.2-1_x86_64.ipk
+Size: 22746
+SHA256sum: b38ca2e96d8dac9edab85afe2a3471fec3b6aed30d2b41063452223896101a86
+Description:  Lightweight UPnP library
+
+Package: libnatpmp1
+Version: 20150609-3
+Depends: libc
+Provides: libnatpmp
+License: BSD-3-Clause
+Section: libs
+ABIVersion: 1
+Architecture: x86_64
+Installed-Size: 3323
+Filename: libnatpmp1_20150609-3_x86_64.ipk
+Size: 4243
+SHA256sum: ecd98376eb5f262157b2b1d9c9325ad05da267b127b589900c2f2b4098b2d868
+Description:  libnatpmp is an attempt to make a portable and fully compliant implementation
+ of the protocol for the client side. It is based on non blocking sockets and
+ all calls of the API are asynchronous. It is therefore very easy to integrate
+ the NAT-PMP code to any event driven code.
+ This package contains the shared library.
+
+Package: libsensors5
+Version: 3.6.0-1
+Depends: libc, sysfsutils
+Provides: libsensors
+License: GPL-2.0-or-later LGPL-2.1-or-later
+Section: libs
+ABIVersion: 5
+CPE-ID: cpe:/a:lm_sensors:lm_sensors
+Architecture: x86_64
+Installed-Size: 19775
+Filename: libsensors5_3.6.0-1_x86_64.ipk
+Size: 20464
+SHA256sum: 79f878e04deb95c9e6507145df62498b2455cef33d422410b90bbb2209e163a5
+Description:  lm-sensors libraries
+
+Package: libsodium
+Version: 1.0.18-3
+Depends: libc
+License: ISC
+Section: libs
+Architecture: x86_64
+Installed-Size: 145705
+Filename: libsodium_1.0.18-3_x86_64.ipk
+Size: 146944
+SHA256sum: bfb428fe24c6a8374059b0a53c8bd608be949c5cac870aab9fb2280cf1ca2e1a
+Description:  NaCl (pronounced "salt") is a new easy-to-use high-speed software library for network communication, encryption, decryption, signatures, etc.
+ NaCl's goal is to provide all of the core operations needed to build higher-level cryptographic tools.
+ Sodium is a portable, cross-compilable, installable, packageable fork of NaCl (based on the latest released upstream version nacl-20110221), with a compatible API.
+ The design choices, particularly in regard to the Curve25519 Diffie-Hellman function, emphasize security (whereas NIST curves emphasize "performance" at the cost of security), and "magic constants" in NaCl/Sodium have clear rationales.
+ The same cannot be said of NIST curves, where the specific origins of certain constants are not described by the standards.
+ And despite the emphasis on higher security, primitives are faster across-the-board than most implementations of the NIST standards.
+
+Package: libudns
+Version: 0.4-1
+Depends: libc
+License: LGPL-2.1
+Section: libs
+Architecture: x86_64
+Installed-Size: 19012
+Filename: libudns_0.4-1_x86_64.ipk
+Size: 19812
+SHA256sum: 898d600dfd3a10927eab779a0b6160d5f78e3ddee5eac6cbdb672eb318ed3927
+Description:  UDNS is a stub DNS resolver library with ability to perform both syncronous
+ and asyncronous DNS queries.
+
+Package: lm-sensors
+Version: 3.6.0-1
+Depends: libc, sysfsutils, libsensors5
+License: GPL-2.0-or-later LGPL-2.1-or-later
+Section: utils
+CPE-ID: cpe:/a:lm_sensors:lm_sensors
+Architecture: x86_64
+Installed-Size: 8211
+Filename: lm-sensors_3.6.0-1_x86_64.ipk
+Size: 9037
+SHA256sum: 0d0b43f46d7b1e14d579f399c39b9523f3275a585b095867298564805b8e5a2e
+Description:  utility to read hardware sensor data
+
+Package: miniupnpd
+Version: 2.0.20170421-3
+Depends: libc, iptables, libip4tc2, libuuid1
+License: BSD-3-Clause
+Section: net
+Architecture: x86_64
+Installed-Size: 56892
+Filename: miniupnpd_2.0.20170421-3_x86_64.ipk
+Size: 57869
+SHA256sum: 523b5f1d1d78a61c7b9946a391b969ca1b52d981def415605568de8b0d2947f3
+Description:  Lightweight UPnP IGD, NAT-PMP & PCP daemon
+
+Package: nlbwmon
+Version: 2020-04-11.1-34a18876-5
+Depends: libc, libubox20210516, libnl-tiny1, zlib, kmod-nf-conntrack-netlink
+License: ISC
+Section: net
+Architecture: x86_64
+Installed-Size: 19939
+Filename: nlbwmon_2020-04-11.1-34a18876-5_x86_64.ipk
+Size: 20802
+SHA256sum: 5cc9caceafcd74c7de482c4cbd2610cd4952d9ba60b7c4c67caa5508be1d63e8
+Description:  OpenWrt Traffic Usage Monitor
+
+Package: proto-bonding
+Version: 2021-04-09-1
+Depends: libc, kmod-bonding
+License: GPL-2.0
+Section: net
+Architecture: all
+Installed-Size: 1869
+Filename: proto-bonding_2021-04-09-1_all.ipk
+Size: 2662
+SHA256sum: e822b01c1087f6d9c138cfe61abc7a7c5b54200b375b45c5aa826ec09121246c
+Description:  This package contains the channel bonding proto handler for netifd
+
+Package: shadowsocks-libev-config
+Version: 3.3.5-1
+Depends: libc
+License: GPL-3.0-or-later
+Section: net
+Architecture: x86_64
+Installed-Size: 2718
+Filename: shadowsocks-libev-config_3.3.5-1_x86_64.ipk
+Size: 3518
+SHA256sum: 0a314338c5907ec2ee3f1da76c912cc22099ad0dd2fc828acb6a85afc1f5f34d
+Description:  shadowsocks-libev config scripts
+
+Package: shadowsocks-libev-ss-local
+Version: 3.3.5-1
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config, libpcre
+License: GPL-3.0-or-later
+Section: net
+Architecture: x86_64
+Installed-Size: 50479
+Filename: shadowsocks-libev-ss-local_3.3.5-1_x86_64.ipk
+Size: 51366
+SHA256sum: 8d031ed76f375f8e527bd6715e286340d5462eb2c36100cec8a1ebb371814f48
+Description:  shadowsocks-libev ss-local
+
+Package: shadowsocks-libev-ss-redir
+Version: 3.3.5-1
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config
+License: GPL-3.0-or-later
+Section: net
+Architecture: x86_64
+Installed-Size: 45175
+Filename: shadowsocks-libev-ss-redir_3.3.5-1_x86_64.ipk
+Size: 46030
+SHA256sum: 2121c524ff85bca9edab9cfc4fbbde82f0ee9383af0b9472c2525593e7c7f6b3
+Description:  shadowsocks-libev ss-redir
+
+Package: shadowsocks-libev-ss-server
+Version: 3.3.5-1
+Depends: libc, libev, libmbedtls12, libpthread, libsodium, shadowsocks-libev-config, libcares, libpcre
+License: GPL-3.0-or-later
+Section: net
+Architecture: x86_64
+Installed-Size: 55584
+Filename: shadowsocks-libev-ss-server_3.3.5-1_x86_64.ipk
+Size: 56428
+SHA256sum: 87b492475a93f07ce0fa7c61cd90bb350e66b2a88dc28a82e6b0a7d14de4651c
+Description:  shadowsocks-libev ss-server
+
+Package: strongswan-charon
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 238575
+Filename: strongswan-charon_5.9.2-12_x86_64.ipk
+Size: 239376
+SHA256sum: 68e507133a21d0dcdb71300cb96252a2325b152a7c7a31c23c34cae87a997de2
+Description:  StrongSwan is an OpenSource IPsec implementation for the Linux operating system.
+ This package contains charon, an IKEv2 keying daemon.
+
+Package: strongswan-ipsec
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 5945
+Filename: strongswan-ipsec_5.9.2-12_x86_64.ipk
+Size: 6962
+SHA256sum: acadff1aa90aaf77c2b32f108a44d6591a301e46e70923bbf232c48cb5605e8e
+Description:  StrongSwan is an OpenSource IPsec implementation for the Linux operating system.
+ This package contains the ipsec utility.
+
+Package: strongswan-minimal
+Version: 5.9.2-12
+Depends: libc, strongswan, strongswan-charon, strongswan-mod-aes, strongswan-mod-gmp, strongswan-mod-hmac, strongswan-mod-kernel-netlink, strongswan-mod-nonce, strongswan-mod-pubkey, strongswan-mod-random, strongswan-mod-sha1, strongswan-mod-socket-default, strongswan-mod-stroke, strongswan-mod-updown, strongswan-mod-x509, strongswan-mod-xcbc
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 105
+Filename: strongswan-minimal_5.9.2-12_x86_64.ipk
+Size: 1090
+SHA256sum: 710a84e6f21d6c89eb835130e78da28a431f03a323f590c0ad2aa5acb6f30036
+Description:  StrongSwan is an OpenSource IPsec implementation for the Linux operating system.
+ This meta-package contains only dependencies for a minimal IKEv2 setup.
+
+Package: strongswan-mod-aes
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 15687
+Filename: strongswan-mod-aes_5.9.2-12_x86_64.ipk
+Size: 15942
+SHA256sum: 96e860726326d092a17741d032d8a250fc2ee52c6fd42dcb8cc047006ba14a71
+Description:  StrongSwan AES crypto plugin
+
+Package: strongswan-mod-gmp
+Version: 5.9.2-12
+Depends: libc, strongswan, libgmp10
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 12360
+Filename: strongswan-mod-gmp_5.9.2-12_x86_64.ipk
+Size: 13138
+SHA256sum: bca0e8ecce4e9e7b069d7fda33267ee9c51815d4be8bebc717464aa412565aca
+Description:  StrongSwan libgmp plugin
+
+Package: strongswan-mod-hmac
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 2507
+Filename: strongswan-mod-hmac_5.9.2-12_x86_64.ipk
+Size: 3325
+SHA256sum: f5252ab6e91c948195bdac3682129e81bfbe92a9b7a334de0729a3df894d4474
+Description:  StrongSwan HMAC crypto plugin
+
+Package: strongswan-mod-kernel-libipsec
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 21358
+Filename: strongswan-mod-kernel-libipsec_5.9.2-12_x86_64.ipk
+Size: 22176
+SHA256sum: b03dd2f3331b89fff79a369d27c0917ca1e271cb380875e736686b14d5b57e81
+Description:  StrongSwan libipsec kernel interface plugin
+
+Package: strongswan-mod-kernel-netlink
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 35625
+Filename: strongswan-mod-kernel-netlink_5.9.2-12_x86_64.ipk
+Size: 36487
+SHA256sum: 62f30086770e8b55046677e3fcec5f9ae63bff823c51b7f8d3695e3cbf4a29c2
+Description:  StrongSwan netlink kernel interface plugin
+
+Package: strongswan-mod-nonce
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 1651
+Filename: strongswan-mod-nonce_5.9.2-12_x86_64.ipk
+Size: 2467
+SHA256sum: 9d99af4b4a3a3f227d007c83152f9cd997581e09fb9dc06aea204139f46fdde6
+Description:  StrongSwan nonce genereation plugin
+
+Package: strongswan-mod-pubkey
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 2743
+Filename: strongswan-mod-pubkey_5.9.2-12_x86_64.ipk
+Size: 3572
+SHA256sum: 6c07924bd8d45fe95cf8d03c307e45836613d12b4ef7878c646694a0109ae36a
+Description:  StrongSwan raw public key plugin
+
+Package: strongswan-mod-random
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 2532
+Filename: strongswan-mod-random_5.9.2-12_x86_64.ipk
+Size: 3342
+SHA256sum: ec44d0f06bd455015d4667284769d3b3e613a17ed42544c21ffad15e90edaab9
+Description:  StrongSwan RNG plugin
+
+Package: strongswan-mod-sha1
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 5648
+Filename: strongswan-mod-sha1_5.9.2-12_x86_64.ipk
+Size: 6450
+SHA256sum: 924af79c2178cbae663f98d9a85f6c675fa06e17862039407c9fe2401bcf142c
+Description:  StrongSwan SHA1 crypto plugin
+
+Package: strongswan-mod-socket-default
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 5342
+Filename: strongswan-mod-socket-default_5.9.2-12_x86_64.ipk
+Size: 6174
+SHA256sum: 2da2081b21d3bfb1b00d2f08ff91734d6d0e6059e83f9ada8dfbfa31412d85f4
+Description:  StrongSwan default socket implementation for charon plugin
+
+Package: strongswan-mod-stroke
+Version: 5.9.2-12
+Depends: libc, strongswan, strongswan-charon, strongswan-ipsec
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 66112
+Filename: strongswan-mod-stroke_5.9.2-12_x86_64.ipk
+Size: 66954
+SHA256sum: aa172729f6fbdac290f7f0121043b5ea54e6652756c2139a6d6937b6ecbe10f0
+Description:  StrongSwan Stroke plugin
+
+Package: strongswan-mod-updown
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 9036
+Filename: strongswan-mod-updown_5.9.2-12_x86_64.ipk
+Size: 9874
+SHA256sum: 3063500cb1d39195996d7ce7fa952634a913945f97f20255cc3ea515d084ed27
+Description:  StrongSwan updown firewall plugin
+
+Package: strongswan-mod-x509
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 31178
+Filename: strongswan-mod-x509_5.9.2-12_x86_64.ipk
+Size: 31960
+SHA256sum: e2e2d51fdfcca542d843901b6108b5685d22d889ba232dccb42c50e521f3a425
+Description:  StrongSwan x509 certificate plugin
+
+Package: strongswan-mod-xauth-generic
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 2950
+Filename: strongswan-mod-xauth-generic_5.9.2-12_x86_64.ipk
+Size: 3795
+SHA256sum: 6ad1dbb24987c05a2b6daa0b3ec31c2c21bb180b51fd67aa36a205c512a7421e
+Description:  StrongSwan generic XAuth backend plugin
+
+Package: strongswan-mod-xcbc
+Version: 5.9.2-12
+Depends: libc, strongswan
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 3065
+Filename: strongswan-mod-xcbc_5.9.2-12_x86_64.ipk
+Size: 3901
+SHA256sum: 8a2049c337b54aa5ac8763e3e4aba547efe9983f3c6c31326c0e2d098cd498b0
+Description:  StrongSwan xcbc crypto plugin
+
+Package: strongswan
+Version: 5.9.2-12
+Depends: libc, libpthread, ip, kmod-crypto-authenc, kmod-ipsec, kmod-ipsec4, kmod-ipsec6, kmod-ipt-ipsec, iptables-mod-ipsec
+License: GPL-2.0-or-later
+Section: net
+CPE-ID: cpe:/a:strongswan:strongswan
+Architecture: x86_64
+Installed-Size: 166683
+Filename: strongswan_5.9.2-12_x86_64.ipk
+Size: 167263
+SHA256sum: c70aa9b088787eb513626ed0aa964d00afade20ee41a1d088233d0431f234e73
+Description:  StrongSwan is an OpenSource IPsec implementation for the Linux operating system.
+ This package contains shared libraries and scripts.
+
+Package: wget-ssl
+Version: 1.21.1-3
+Depends: libc, libpcre, zlib, libopenssl1.1, librt
+Provides: gnu-wget, wget
+Alternatives: 300:/usr/bin/wget:/usr/libexec/wget-ssl
+License: GPL-3.0-or-later
+Section: net
+CPE-ID: cpe:/a:gnu:wget
+Architecture: x86_64
+Installed-Size: 215905
+Filename: wget-ssl_1.21.1-3_x86_64.ipk
+Size: 217096
+SHA256sum: 11088eb799f5aa8b8bdff6811e17420792fe0c463f211123a230d9851d8f24b3
+Description:  Wget is a network utility to retrieve files from the Web using http
+ and ftp, the two most widely used Internet protocols. It works
+ non-interactively, so it will work in the background, after having
+ logged off. The program supports recursive retrieval of web-authoring
+ pages as well as ftp sites -- you can use wget to make mirrors of
+ archives and home pages or to travel the Web like a WWW robot.
+ This package is built with SSL support.
+
+Package: wsdd2
+Version: 2020-11-19-e0cf50d5-1
+Depends: libc
+License: GPL-3.0-only
+Section: net
+Architecture: x86_64
+Installed-Size: 16782
+Filename: wsdd2_2020-11-19-e0cf50d5-1_x86_64.ipk
+Size: 17797
+SHA256sum: f70cf2107b2b24cd7a90178ed6b056a3e936a3cf21d76e9b8bb770696ec8afe8
+Description:  Web Services for Devices or Web Services on Devices (WSD),
+ is a Microsoft API to simplify programming connections to web service
+ enabled devices, such as printers, scanners and file shares.
+ 
+ This daemon advertises and responds to probe requests from Windows clients looking for file shares.
+ It also implements LLMNR multicast name lookup services.
+
+Package: zerotier
+Version: 1.6.5-1
+Depends: libc, libpthread, libstdcpp6, kmod-tun, ip, libminiupnpc, libnatpmp1
+License: BSL 1.1
+Section: net
+Architecture: x86_64
+Installed-Size: 503438
+Filename: zerotier_1.6.5-1_x86_64.ipk
+Size: 504343
+SHA256sum: 3662b1d91b9a2ccae8bf54b6aacb48cb9bab4aee18e8d5d5936bc2f08d46733c
+Description:  ZeroTier creates a global provider-independent virtual private cloud network.
+
