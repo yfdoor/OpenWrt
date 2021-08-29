@@ -27,18 +27,18 @@ env:
   #####################################################
   REPO_URL: https://github.com/openwrt/openwrt.git
   #REPO_URL: https://github.com/coolsnowwolf/lede.git
-  REPO_BRANCH: v19.07.7
+  REPO_BRANCH: openwrt-21.02
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
   PKG_LEAN: true
-  SSH_ACTION: true
+  SSH_ACTION: false
   UPLOAD_BRANCH: false
-  UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: false
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: false
+  UPLOAD_BIN_DIR: true
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
+  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   #####################################################
 
