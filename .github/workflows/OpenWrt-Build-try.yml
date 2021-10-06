@@ -31,7 +31,6 @@ env:
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  PKG_LEAN: true
   SSH_ACTION: true
   UPLOAD_BRANCH: true
   UPLOAD_BIN_DIR: true
@@ -57,23 +56,23 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          # sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-          # sudo -E apt-get update
-          # sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-2004)
-          # sudo -E apt-get -y autoremove --purge
-          # sudo -E apt-get clean
-          # sudo timedatectl set-timezone "$TZ" 
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get update
+          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-2004)
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          sudo timedatectl set-timezone "$TZ" 
           
-          # echo "========================================"
-          # echo "[Space Usage]:"
-          # echo "========================================"
-          # df -hT
-          # echo "========================================"
-          # echo "[File List]:" 
-          # echo "========================================"
-          # echo "Current Path:" $PWD
-          # ls -l -A
-          # echo "========================================"
+          echo "========================================"
+          echo "[Space Usage]:"
+          echo "========================================"
+          df -hT
+          echo "========================================"
+          echo "[File List]:" 
+          echo "========================================"
+          echo "Current Path:" $PWD
+          ls -l -A
+          echo "========================================"
           
      # 下载源码
       - name: Clone Code
@@ -84,27 +83,8 @@ jobs:
       - name: Download My Package
         run: |
           chmod +x script/$DIY0_FILE
-          chmod +x script/DIY3.sh
           cd openwrt
           ../script/$DIY0_FILE
-          ../script/DIY3.sh
-          
-    #  # Lean's Package 适配
-    #   - name: Lean Package Delete
-    #     if: env.REPO_URL == 'https://github.com/coolsnowwolf/lede.git'
-    #     run: |
-    #       cd openwrt
-    #       rm -rf package/lean
-          
-    #  # Lean's Package 适配
-    #   - name: Lean Package Fix
-    #     if: env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git' && env.PKG_LEAN == 'true'
-    #     run: |
-    #       cd openwrt          
-    #       mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile          
-    #       mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
-    #       sed -i '23a\tools-y += ucl upx' tools/Makefile
-    #       sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
           
       # 更新Feed
       - name: Update Feeds

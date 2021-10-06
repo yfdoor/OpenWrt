@@ -22,7 +22,6 @@
 | -- REPO_BRANCH: v19.07.2 | 定义分支 |
 | -- DIY_FILE: script/DIY.sh | 定义脚本 |
 | -- CONF_FILE: x86_64 | 定义配置文件 |
-| -- PKG_LEAN: true | 是否包含Lean's package |
 | -- SSH_ACTION: false |是否打开 SSH |
 | -- UPLOAD_BRANCH: true | 是否创建分支 |
 | -- UPLOAD_BIN_DIR: true | 是否创建 Bin 到 Artifact |
