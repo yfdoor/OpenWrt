@@ -21,7 +21,7 @@
 | -- REPO_URL: https://github.com/openwrt/openwrt.git  | 定义源码 |
 | -- REPO_BRANCH: v19.07.2 | 定义分支 |
 | -- DIY_FILE: script/DIY.sh | 定义脚本 |
-| -- CON_FILE: x86_64 | 定义配置文件 |
+| -- CONF_FILE: x86_64 | 定义配置文件 |
 | -- PKG_LEAN: true | 是否包含Lean's package |
 | -- SSH_ACTION: false |是否打开 SSH |
 | -- UPLOAD_BRANCH: true | 是否创建分支 |
@@ -29,7 +29,7 @@
 | -- UPLOAD_FIRMWARE: true | 是否创建 Firmware 到 Artifact |
 | -- UPLOAD_COWTRANSFER: true | 是否创建外链 COWTRANSFER |
 | -- UPLOAD_WETRANSFER: true | 是否创建外链 WETRANSFER|
-
+| -- UPLOAD_RELEASE: true | 是否创建发行版|
 
 ## 目录：
 - ### config.d：
