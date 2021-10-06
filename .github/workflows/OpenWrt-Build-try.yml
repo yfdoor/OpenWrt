@@ -31,7 +31,7 @@ env:
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  SSH_ACTION: true
+  SSH_ACTION: false
   UPLOAD_BRANCH: true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
