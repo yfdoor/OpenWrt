@@ -31,7 +31,6 @@ env:
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  PKG_LEAN: true
   SSH_ACTION: false
   UPLOAD_BRANCH: true
   UPLOAD_BIN_DIR: true
@@ -44,7 +43,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
@@ -59,7 +58,7 @@ jobs:
         run: |
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
           sudo -E apt-get update
-          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-1804)
+          sudo -E apt-get -y install $(curl -fsSL git.io/depends-ubuntu-2004)
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           sudo timedatectl set-timezone "$TZ" 
@@ -85,35 +84,14 @@ jobs:
         run: |
           chmod +x script/$DIY0_FILE
           cd openwrt
-          ../script/$DIY0_FILE
-          
-     # Lean's Package 适配
-      - name: Lean Package Delete
-        if: env.REPO_URL == 'https://github.com/coolsnowwolf/lede.git'
-        run: |
-          cd openwrt
-          rm -rf package/lean
-          
-     # Lean's Package 适配
-      - name: Lean Package Fix
-        if: env.REPO_URL != 'https://github.com/coolsnowwolf/lede.git' && env.PKG_LEAN == 'true'
-        run: |
-          cd openwrt          
-          mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile          
-          mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
-          sed -i '23a\tools-y += ucl upx' tools/Makefile
-          sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
-          
+          ../script/$DIY0_FILE          
+
       # 更新Feed
       - name: Update Feeds
         run: |
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          pushd feeds/packages/lang	
-          sudo rm -rf golang	
-          svn co https://github.com/openwrt/packages/trunk/lang/golang	
-          popd
           
       # 配置文件
       - name: Config File
@@ -172,8 +150,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cd openwrt/bin
-          # zip -r OpenWrt_Packages.zip -s 100m packages
-          # zip -r OpenWrt_Targets.zip -s 100m targets
           git init
           git config user.name "yfdoor"
           git config user.email "yfdoor@github.com"
@@ -195,7 +171,6 @@ jobs:
         id: organize
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
-          #find ./ -type d -name "packages" | xargs rm -rf {}
           cd openwrt/bin/targets/*/*
           rm -rf packages
           

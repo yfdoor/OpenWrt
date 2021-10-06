@@ -5,17 +5,12 @@
 - 若 Fork 项目，请修改代码中自己的 TOKEN
 
 ## 功能：
-- 可以支持三种编译模式 
-  1. 编译官方源码
-  2. 编译第三方源码
-  3. 编译官方源码 & 第三方 Package
-- 自动上传固件
+- 支持编译官方源码或第三方源码
+- Package：默认添加 [yfdoor/OpenWrt-Packages](https://github.com/yfdoor/OpenWrt-Packages)，该库包含所有 Lean's package and Lienol's package 和一些自用 package，且定期自动更新。
 - 自动发布固件
 - 自动创建分支
-- 自动同步码云(未实装)
 
 ## 变量：
-
 | 变量名 | 释义 |
 | :--- | :--- |
 | -- REPO_URL: https://github.com/openwrt/openwrt.git  | 定义源码 |
@@ -24,11 +19,11 @@
 | -- CONF_FILE: x86_64 | 定义配置文件 |
 | -- SSH_ACTION: false |是否打开 SSH |
 | -- UPLOAD_BRANCH: true | 是否创建分支 |
+| -- UPLOAD_RELEASE: true | 是否创建发行版|
 | -- UPLOAD_BIN_DIR: true | 是否创建 Bin 到 Artifact |
 | -- UPLOAD_FIRMWARE: true | 是否创建 Firmware 到 Artifact |
-| -- UPLOAD_COWTRANSFER: true | 是否创建外链 COWTRANSFER |
 | -- UPLOAD_WETRANSFER: true | 是否创建外链 WETRANSFER|
-| -- UPLOAD_RELEASE: true | 是否创建发行版|
+| -- UPLOAD_COWTRANSFER: true | 是否创建外链 COWTRANSFER |
 
 ## 目录：
 - ### config.d：
