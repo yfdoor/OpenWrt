@@ -15,7 +15,7 @@ cat > package/yfdoorg/yfdoor/default-settings/files/zzz-default-settings <<-EOF
     
     # set distfeeds
     cp /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf_BK
-    sed -i 's#http://downloads.openwrt.org#http://mirrors.tuna.tsinghua.edu.cn/openwrt#g' /etc/opkg/distfeeds.conf
+    sed -i 's#downloads.openwrt.org#mirrors.tuna.tsinghua.edu.cn/openwrt#g' /etc/opkg/distfeeds.conf
     sed -i '/yfdoor/d' /etc/opkg/distfeeds.conf
     
     # set firewall
