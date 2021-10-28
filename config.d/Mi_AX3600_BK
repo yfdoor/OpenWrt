@@ -1,0 +1,53 @@
+# OpenWrt Configuration
+CONFIG_TARGET_ipq807x=y
+CONFIG_TARGET_ipq807x_generic=y
+CONFIG_TARGET_ipq807x_generic_DEVICE_xiaomi_ax3600=y
+
+# Root filesystem archives
+# CONFIG_TARGET_ROOTFS_CPIOGZ is not set
+# CONFIG_TARGET_ROOTFS_TARGZ=y
+
+# Root filesystem images
+# CONFIG_TARGET_ROOTFS_EXT4FS is not set
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+CONFIG_TARGET_IMAGES_GZIP=y
+CONFIG_GRUB_TIMEOUT="0"
+
+# Image Options
+CONFIG_TARGET_KERNEL_PARTSIZE=16
+CONFIG_TARGET_ROOTFS_PARTSIZE=496
+
+# Kernel build options
+CONFIG_KERNEL_BUILD_DOMAIN="yfdoor@github"
+CONFIG_KERNEL_BUILD_USER="yfdoor"
+
+# Base system
+# CONFIG_PACKAGE_dnsmasq is not set
+# CONFIG_PACKAGE_dnsmasq-dhcpv6 is not set
+CONFIG_PACKAGE_dnsmasq-full=y
+CONFIG_PACKAGE_wget=y
+CONFIG_LUCI_LANG_en=y
+CONFIG_LUCI_LANG_zh_Hans=y
+
+# Base package
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-compat=y
+CONFIG_PACKAGE_luci-lib-ipkg=y
+
+# My Packages
+CONFIG_PACKAGE_AdGuardHome=y
+CONFIG_PACKAGE_luci-app-adguardhome=y
+CONFIG_PACKAGE_luci-app-ssr-plus=y
+CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-vlmcsd=y
+CONFIG_PACKAGE_luci-app-wrtbwmon=y
+# CONFIG_PACKAGE_luci-app-unblockmusic=y
+# CONFIG_PACKAGE_luci-app-zerotier=y
+# CONFIG_PACKAGE_luci-app-flowoffload=y
+
+CONFIG_PACKAGE_luci-app-timecontrol=y
+CONFIG_PACKAGE_luci-app-control-webrestriction=y
+CONFIG_PACKAGE_luci-app-control-timewol=y
+
+CONFIG_PACKAGE_ddns-scripts_aliyun=y
+CONFIG_PACKAGE_default-settings=y
