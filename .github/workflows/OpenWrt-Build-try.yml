@@ -25,19 +25,19 @@ env:
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
-  REPO_URL: https://github.com/openwrt/openwrt.git
-  #REPO_URL: https://github.com/coolsnowwolf/lede.git
-  REPO_BRANCH: v21.02.0
-  CONF_FILE: x86_64
+  ## REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_BRANCH: master
+  CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  SSH_ACTION: false
-  UPLOAD_BRANCH: true
-  UPLOAD_BIN_DIR: true
+  SSH_ACTION: true
+  UPLOAD_BRANCH: false
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
-  UPLOAD_RELEASE: true
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
   #####################################################
 
