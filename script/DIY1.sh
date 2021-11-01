@@ -20,17 +20,23 @@ cat > package/yfdoorg/yfdoor/default-settings/files/zzz-default-settings <<-EOF
     
     # set firewall
     sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
-    echo "iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
-    echo "iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
+    echo 'iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+    echo 'iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+    echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+    echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
     
     # Others
+    sed -i '/option disabled/d' /etc/config/wireless
+    sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
+
     sed -i '/log-facility/d' /etc/dnsmasq.conf
     echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 
-    sed -i 's/cbi.submit\"] = true/cbi.submit\"] = \"1\"/g' /usr/lib/lua/luci/dispatcher.lua
+    # sed -i 's/cbi.submit\"] = true/cbi.submit\"] = \"1\"/g' /usr/lib/lua/luci/dispatcher.lua
 
     echo 'hsts=0' > /root/.wgetrc
     
-    rm -rf /tmp/luci*
+    rm -rf /tmp/luci-modulecache/
+    rm -f /tmp/luci-indexcache
     exit 0
 EOF

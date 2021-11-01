@@ -100,8 +100,7 @@ jobs:
           [ -e files ] && cp -r -f files openwrt/files
           [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
           cd openwrt
-          ../script/$DIY1_FILE
-          make defconfig
+          ../script/$DIY1_FILE 
           
       # SSH连接
       - name: SSH Connection
@@ -115,6 +114,7 @@ jobs:
       - name: Make Download
         run: |
           cd openwrt
+          make defconfig
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
           
