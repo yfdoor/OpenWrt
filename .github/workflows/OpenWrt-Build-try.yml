@@ -31,11 +31,11 @@ env:
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  SSH_ACTION: true
+  SSH_ACTION: false
   UPLOAD_BRANCH: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
+  UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
@@ -196,15 +196,15 @@ jobs:
           name: OpenWrt_Firmware_${{ env.DEVICE_NAME }}_${{ env.RELEASE_DATE }}
           path: ${{ env.FIRMWARE }}
         
-    # 上传CowTransfer
-      - name: Upload to Cowtransfer
-        id: cowtransfer
+    # 上传Airportal
+      - name: Upload to airportal
+        id: airportal
         if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
         run: |
           curl -fsSL git.io/file-transfer | sh
-          ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-          echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-          echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+          ./transfer arp -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
+          echo "::warning file=airportal.cn::$(cat airportal.log | grep https)"
+          echo "::set-output name=url::$(cat airportal.log | grep https | cut -f3 -d" ")"
         
       # 上传WeTransfer
       - name: Upload to WeTransfer
