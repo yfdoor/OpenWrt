@@ -202,7 +202,7 @@ jobs:
         if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
         run: |
           curl -fsSL git.io/file-transfer | sh
-          ./transfer arp --hours 72 -p 16 --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
+          ./transfer arp --hours 72 --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
           echo "::warning file=airportal.cn::$(cat airportal.log | grep https)"
           echo "::set-output name=url::$(cat airportal.log | grep https | cut -f3 -d" ")"
         
