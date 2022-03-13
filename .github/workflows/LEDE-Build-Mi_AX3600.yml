@@ -26,8 +26,8 @@ env:
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
   ## REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_URL: https://github.com/coolsnowwolf/lede.git
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/robimarko/openwrt.git
+  REPO_BRANCH: ipq807x-5.15
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
