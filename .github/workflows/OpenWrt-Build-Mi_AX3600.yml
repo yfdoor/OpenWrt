@@ -4,7 +4,7 @@
 # https://github.com/yfdoor/OpenWrt
 # Description: GitHub Actions for OpenWrt Build
 
-name: LEDE-Build-Mi_AX3600
+name: OpenWrt-Build-Mi_AX3600
 
 # 触发条件
 on:
@@ -14,7 +14,7 @@ on:
   #    paths:
   #      - '.config'
   schedule:
-     - cron: 0 0 3/5 * *
+     - cron: 0 0 4/5 * *
   #watch:
   #   types: started
 
@@ -24,9 +24,9 @@ env:
   #####   1：编译官方源码
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
-  #####################################################  
-  REPO_URL: https://github.com/Boos4721/openwrt.git
-  REPO_BRANCH: master
+  #####################################################
+  REPO_URL: https://github.com/robimarko/openwrt.git
+  REPO_BRANCH: ipq807x-5.15
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
