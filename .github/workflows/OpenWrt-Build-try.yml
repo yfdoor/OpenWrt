@@ -25,7 +25,6 @@ env:
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
-  ## REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: master
   CONF_FILE: Mi_AX3600
