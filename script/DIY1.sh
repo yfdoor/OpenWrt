@@ -13,6 +13,14 @@ cat > package/yfdoorg/yfdoor/default-settings/files/zzz-default-settings <<-EOF
     sed -i '/root/d' /etc/shadow
     sed -i '1 i root:::0:99999:7:::' /etc/shadow
 
+    # set language
+    uci set luci.main.lang=zh_cn
+    uci commit luci
+
+    # set fstab
+    uci set fstab.@global[0].anon_mount=1
+    uci commit fstab
+
     # set time zone
     uci set system.@system[0].timezone=CST-8
     uci set system.@system[0].zonename=Asia/Shanghai
@@ -39,13 +47,12 @@ cat > package/yfdoorg/yfdoor/default-settings/files/zzz-default-settings <<-EOF
     echo 'iptables -t nat -A postrouting_rule -d $MODEMIP -o $WAN_PORT -j MASQUERADE' >> /etc/firewall.user
     
     # Others
+    ln -sf /sbin/ip /usr/bin/ip
     sed -i '/option disabled/d' /etc/config/wireless
     sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
 
     sed -i '/log-facility/d' /etc/dnsmasq.conf
-    echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
-
-    # sed -i 's/cbi.submit\"] = true/cbi.submit\"] = \"1\"/g' /usr/lib/lua/luci/dispatcher.lua
+    echo "log-facility=/dev/null" >> /etc/dnsmasq.conf    
 
     echo 'hsts=0' > /root/.wgetrc
     
