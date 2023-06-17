@@ -24,8 +24,8 @@ env:
   #####   1：编译官方源码
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
-  #####################################################  
-  REPO_URL: https://github.com/Boos4721/openwrt.git
+  #####################################################
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
   REPO_BRANCH: master
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
@@ -42,7 +42,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04    
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
     steps:
@@ -77,13 +77,13 @@ jobs:
       - name: Clone Code
         run: |
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-          
+
       # 自定插件
       - name: Download My Package
         run: |
           chmod +x script/$DIY0_FILE
           cd openwrt
-          ../script/$DIY0_FILE          
+          ../script/$DIY0_FILE
 
       # 更新Feed
       - name: Update Feeds
@@ -99,8 +99,8 @@ jobs:
           [ -e files ] && cp -r -f files openwrt/files
           [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
           cd openwrt
-          ../script/$DIY1_FILE 
-          
+          ../script/$DIY1_FILE
+
       # SSH连接
       - name: SSH Connection
         uses: P3TERX/ssh2actions@v1.0.0
@@ -116,7 +116,7 @@ jobs:
           make defconfig
           make download -j8
           find dl/ -size -1024c -exec rm -f {} \;
-          
+
       # 编译固件
       - name: Compile Firmware
         id: compile
@@ -139,9 +139,8 @@ jobs:
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
-          
-          echo "::set-output name=status::success"          
-          
+          echo "status=success" >> $GITHUB_OUTPUT
+
      # 更新分支
       - name: Upload Branch
         if: env.UPLOAD_BRANCH == 'true' && steps.compile.outputs.status == 'success'
@@ -156,7 +155,7 @@ jobs:
           git commit -m "Update OpenWrt_"$CONF_FILE
           git push --force --quiet https://$GITHUB_TOKEN@github.com/yfdoor/OpenWrt.git HEAD:LEDE_$CONF_FILE
           rm -rf .git
-          
+
       # 上传 Bin
       - name: Upload Bin Directory
         uses: actions/upload-artifact@main
@@ -185,8 +184,8 @@ jobs:
           echo "========================================"
           
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-          echo "::set-output name=status::success"
-          
+          echo "status=success" >> $GITHUB_OUTPUT
+
       # 上传固件
       - name: Upload Firmware
         uses: actions/upload-artifact@main
@@ -203,7 +202,7 @@ jobs:
           curl -fsSL git.io/file-transfer | sh
           ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
           echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-          echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+          echo "url=$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
       # 上传WeTransfer
       - name: Upload to WeTransfer
@@ -213,7 +212,7 @@ jobs:
           curl -fsSL git.io/file-transfer | sh
           ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
           echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-          echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+          echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
       
       # 生成发行
       - name: Generate Release
@@ -232,7 +231,7 @@ jobs:
           [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer Download (24hrs)](${{ steps.cowtransfer.outputs.url }})" >> release.txt
           [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer Download (7days)](${{ steps.wetransfer.outputs.url }})" >> release.txt          
  
-          echo "::set-output name=status::success"
+          echo "status=success" >> $GITHUB_OUTPUT
           
       # 上传发行
       - name: Upload Release
@@ -244,7 +243,7 @@ jobs:
           tag_name: ${{ env.RELEASE_DATE }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
-     
+
       # 清理发行
       - name: Remove Old Release
         uses: dev-drprasad/delete-older-releases@v0.1.0

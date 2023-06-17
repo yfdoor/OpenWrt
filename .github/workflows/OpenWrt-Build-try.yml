@@ -25,16 +25,16 @@ env:
   #####   2：编译第三方源码
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
-  REPO_URL: https://github.com/coolsnowwolf/lede.git
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/openwrt/openwrt.git
+  REPO_BRANCH: v23.05.0-rc1
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  SSH_ACTION: false
+  SSH_ACTION: true
   UPLOAD_BRANCH: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: true
+  UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
@@ -84,13 +84,13 @@ jobs:
           chmod +x script/$DIY0_FILE
           cd openwrt
           ../script/$DIY0_FILE
-          
+
       # 更新Feed
       - name: Update Feeds
         run: |
           cd openwrt
           ./scripts/feeds update -a
-          ./scripts/feeds install -a      
+          ./scripts/feeds install -a
           
       # 配置文件
       - name: Config File
@@ -99,7 +99,7 @@ jobs:
           [ -e files ] && cp -r -f files openwrt/files
           [ -e config.d/$CONF_FILE ] && cp -r -f config.d/$CONF_FILE openwrt/.config
           cd openwrt
-          ../script/$DIY1_FILE          
+          ../script/$DIY1_FILE
 
       # SSH连接
       - name: SSH Connection
@@ -139,8 +139,7 @@ jobs:
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
-          
-          echo "::set-output name=status::success"          
+          echo "status=success" >> $GITHUB_OUTPUT
 
      # 更新分支
       - name: Upload Branch
@@ -169,7 +168,7 @@ jobs:
       - name: Organize Firmware
         id: organize
         if: steps.compile.outputs.status == 'success' && !cancelled()
-        run: |    
+        run: |
           cd openwrt/bin/targets/*/*
           rm -rf packages
           
@@ -185,7 +184,7 @@ jobs:
           echo "========================================"
           
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-          echo "::set-output name=status::success"
+          echo "status=success" >> $GITHUB_OUTPUT
 
       # 上传固件
       - name: Upload Firmware
@@ -195,15 +194,15 @@ jobs:
           name: OpenWrt_Firmware_${{ env.DEVICE_NAME }}_${{ env.RELEASE_DATE }}
           path: ${{ env.FIRMWARE }}
         
-    # 上传Airportal
-      - name: Upload to airportal
-        id: airportal
+    # 上传CowTransfer
+      - name: Upload to Cowtransfer
+        id: cowtransfer
         if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
         run: |
           curl -fsSL git.io/file-transfer | sh
-          ./transfer wss -s --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
-          echo "::warning file=airportal.cn::$(cat airportal.log | grep https)"
-          echo "::set-output name=url::$(cat airportal.log | grep https | cut -f3 -d" ")"
+          ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+          echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+          echo "url=$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
       # 上传WeTransfer
       - name: Upload to WeTransfer
@@ -213,7 +212,7 @@ jobs:
           curl -fsSL git.io/file-transfer | sh
           ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
           echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-          echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+          echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
       
       # 生成发行
       - name: Generate Release
@@ -232,7 +231,7 @@ jobs:
           [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer Download (24hrs)](${{ steps.cowtransfer.outputs.url }})" >> release.txt
           [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer Download (7days)](${{ steps.wetransfer.outputs.url }})" >> release.txt          
  
-          echo "::set-output name=status::success"
+          echo "status=success" >> $GITHUB_OUTPUT
           
       # 上传发行
       - name: Upload Release
@@ -244,7 +243,7 @@ jobs:
           tag_name: ${{ env.RELEASE_DATE }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
-          
+
       # 清理发行
       - name: Remove Old Release
         uses: dev-drprasad/delete-older-releases@v0.1.0
