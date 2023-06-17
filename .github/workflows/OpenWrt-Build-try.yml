@@ -30,7 +30,7 @@ env:
   CONF_FILE: Mi_AX3600
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
-  SSH_ACTION: true
+  SSH_ACTION: false
   UPLOAD_BRANCH: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
