@@ -246,7 +246,7 @@ jobs:
 
       # 清理发行
       - name: Remove Old Release
-        uses: dev-drprasad/delete-older-releases@v0.2
+        uses: dev-drprasad/delete-older-releases@v0.2.1
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
