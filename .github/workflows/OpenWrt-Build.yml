@@ -15,8 +15,8 @@ on:
   #      - '.config'
   schedule:
      - cron: 0 0 4/7 * *
-  watch:
-     types: started
+  #watch:
+  #   types: started
 
 # 环境定义
 env:
