@@ -15,8 +15,8 @@ on:
   #      - '.config'
   schedule:
      - cron: 0 0 3/7 * *
-  watch:
-     types: started
+  #watch:
+  #   types: started
 
 # 环境定义
 env:
@@ -31,9 +31,9 @@ env:
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
   SSH_ACTION: false
-  UPLOAD_BRANCH: true
+  UPLOAD_BRANCH: false
   UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: true
