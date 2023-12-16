@@ -26,7 +26,7 @@ env:
   #####   3：编译官方源码 & 第三方 Package
   #####################################################
   REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_BRANCH: v23.05.0
+  REPO_BRANCH: v23.05.2
   CONF_FILE: x86_64
   DIY0_FILE: DIY0.sh
   DIY1_FILE: DIY1.sh
